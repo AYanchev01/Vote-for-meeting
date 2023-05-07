@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'list-of-votes';
+  title = 'Избрани часове и брой гласове';
 }

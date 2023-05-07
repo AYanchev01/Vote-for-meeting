@@ -1,6 +1,7 @@
 {
   "name": "list-of-votes",
   "version": "0.0.0",
+  "description": "A list of times and dates and the number of votes for each one",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,6 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "author": "Aleksandra Bambaldokova",
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.0.0",
