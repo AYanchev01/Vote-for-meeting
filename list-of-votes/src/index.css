@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.box{
+  background: rgb(245, 187, 214);
+   overflow: hidden;
+   max-width: 345px;
+   margin: 50px auto;
+   padding: 20px;
+}
+
+h1{
+  font-size: 30px;    
+  display:inline;
+}
+
+h3{  
+  padding-left:90px;
+  display:inline;
+}
