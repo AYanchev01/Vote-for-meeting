@@ -18,13 +18,11 @@ code {
    max-width: 345px;
    margin: 50px auto;
    padding: 20px;
+   border-radius: 15px;
+
 }
 
 h1{
   font-size: 30px;    
-  display:inline;
-}
-
-h3{  
   display:inline;
 }
