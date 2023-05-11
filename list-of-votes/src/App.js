@@ -24,6 +24,7 @@ function App() {
     {"id":18,"date": "20.05.2022","time": "19:30","votes": 3}
   ]);
 
+
   return (
     <div className="App">
       <div class="titleBox">
@@ -31,6 +32,15 @@ function App() {
       </div>
       <button title="Натисни, за да видиш коя дата е с най-малко гласове"> Най-малко гласове</button>
       <button title="Натисни, за да видиш коя дата е с най-много гласове"> Най-много гласове</button>
+
+      <div className="listBox">
+      {dates && dates.map(task =>
+        {
+          return (
+            <div key={task.id} class="list">{task.date},{task.time} - {task.votes} гласа</div>
+          )
+        })}
+     </div>
     </div>
   );
 }
