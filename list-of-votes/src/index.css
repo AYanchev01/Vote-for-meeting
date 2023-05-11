@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.box{
+.titleBox{
   background: rgb(245, 187, 214);
    overflow: hidden;
    max-width: 345px;
@@ -26,6 +26,5 @@ h1{
 }
 
 h3{  
-  padding-left:90px;
   display:inline;
 }
