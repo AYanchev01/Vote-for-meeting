@@ -24,14 +24,23 @@ function App() {
     {"id":18,"date": "20.05.2022","time": "19:30","votes": 3}
   ]);
 
+  const sortLeastVoted = () => {
+    const sortedLeast = [...dates].sort((a, b) => a.votes - b.votes);
+    setDates(sortedLeast);
+  };
+
+  const sortMostVoted = () => {
+    const sortedMost = [...dates].sort((a, b) => b.votes - a.votes);
+    setDates(sortedMost);
+  };
 
   return (
     <div className="App">
       <div class="titleBox">
         <h1>Списък с дати и часове и гласове за тях</h1>
       </div>
-      <button title="Натисни, за да видиш коя дата е с най-малко гласове"> Най-малко гласове</button>
-      <button title="Натисни, за да видиш коя дата е с най-много гласове"> Най-много гласове</button>
+      <button onClick={sortLeastVoted} title="Натисни, за да видиш коя дата е с най-малко гласове"> Най-малко гласове</button>
+      <button onClick={sortMostVoted}title="Натисни, за да видиш коя дата е с най-много гласове"> Най-много гласове</button>
 
       <div className="listBox">
       {dates && dates.map(task =>

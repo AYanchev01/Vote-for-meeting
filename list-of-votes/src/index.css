@@ -27,7 +27,19 @@ h1{
   display:inline;
 }
 
+.list{
+  font-size: 30px;
+  max-width: 370px;
+}
 
+.listBox{
+  border: 6px solid #000000; 
+  overflow: hidden;
+  max-width: 370px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 30px;
+}
 
 button{
   border-radius: 8px;
