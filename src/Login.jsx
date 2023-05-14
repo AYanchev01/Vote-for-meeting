@@ -6,7 +6,13 @@ export const Login = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(email);
+        var users = JSON.parse(localStorage.getItem('users')) || {};
+        var user = users[email];
+        if (!user || user.password !== pass) {
+            console.log(user.password);
+            alert('Invalid email or password');
+            return;
+          }
     }
 
     return(
