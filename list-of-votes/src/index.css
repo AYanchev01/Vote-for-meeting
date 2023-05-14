@@ -5,8 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: repeating-linear-gradient(45deg, rgb(228, 192, 250),
-   rgb(228, 192, 250) 90px,rgb(239, 221, 251) 90px, rgb(239, 221, 251) 180px, white 180px, white 270px);
+  background: repeating-linear-gradient(45deg, rgb(232, 202, 251),
+   rgb(232, 202, 251) 90px,rgb(239, 224, 249) 90px, rgb(239, 224, 249) 180px, white 180px, white 270px);
    cursor: url(cursor.png), auto;
 }
 
