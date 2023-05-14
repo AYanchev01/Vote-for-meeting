@@ -7,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: repeating-linear-gradient(45deg, rgb(228, 192, 250),
    rgb(228, 192, 250) 90px,rgb(239, 221, 251) 90px, rgb(239, 221, 251) 180px, white 180px, white 270px);
-   cursor: url(watermelon.png), auto;
+   cursor: url(cursor.png), auto;
 }
 
 
@@ -59,7 +59,7 @@ button{
 button:hover{
   background-color:rgb(244, 115, 220);
   border: 3px solid #000000; 
-  cursor: url(watermelon2.png), auto;
+  cursor: url(cursor2.png), auto;
 }
 
 p {
