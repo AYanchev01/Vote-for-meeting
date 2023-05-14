@@ -24,12 +24,12 @@ function App() {
   ]);
 
   const sortLeastVoted = () => {
-    const sortedLeast = [...dates].sort((a, b) => a.votes - b.votes);
+    const sortedLeast = [...dates].sort((firstDate, secondDate) => firstDate.votes - secondDate.votes);
     setDates(sortedLeast);
   };
 
   const sortMostVoted = () => {
-    const sortedMost = [...dates].sort((a, b) => b.votes - a.votes);
+    const sortedMost = [...dates].sort((firstDate, secondDate) => secondDate.votes - firstDate.votes);
     setDates(sortedMost);
   };
 
@@ -46,10 +46,10 @@ function App() {
       </div>
       
       <div className="listBox">
-      {dates && dates.map(task =>
+      {dates && dates.map(event =>
         {
           return (
-            <div key={task.id} class="list">{task.date},{task.time} - {task.votes} гласа</div>
+            <div key={event.id} class="list">{event.date},{event.time} - {event.votes} гласа</div>
           )
         })}
      </div>
