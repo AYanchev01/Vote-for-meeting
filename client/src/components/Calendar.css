@@ -3,7 +3,8 @@
   max-width: 400px;
   margin-top: 20px;
   padding: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  padding-left: 30px;
 }
 
 .calendar table {
@@ -34,4 +35,26 @@
 
 .before-current-date {
   color: gray;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  /* border: 1px solid #ccc; */
+  padding: 10px;
+  max-width: 500px;
+}
+
+li>div:first-child {
+  flex: 1;
+}
+
+li>div:last-child {
+  flex: 0 0 auto;
+  margin-left: 10px;
+}
+
+h2 {
+  padding-left: 40px;
 }
