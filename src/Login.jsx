@@ -1,12 +1,25 @@
-export const Login = () => {
-    return (
-        <form>
-            <label for="email">email:</label>
-            <input type = "email" placeholder="youremail@mail.com" id="email" name="email"/>
+import React, { useState } from "react"
 
-            <label for="password">password:</label>
-            <input type = "password" placeholder="********" id="password" name="password"/>
-            <button>Log in</button>
-        </form>
+export const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(email);
+    }
+
+    return(
+        <div className='auth-form'>
+            <form className='login-form' onSubmit={handleSubmit}>
+                <label htmlFor='email'>Email</label>
+                <input value={email} onChange={(event) => setEmail(event.target.value)} type='email' placeholder='yourEmail@mail.com' id='email' name='email'/>
+
+                <label htmlFor='password'>Password</label>
+                <input value={pass} onChange={(event) => setPass(event.target.value)} type='password' placeholder='********' id='password' name='password'/>
+                <button type='Submit'>Log in!</button>
+            </form>
+            <button className='link-btn' onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here.</button>
+            </div>
     )
 }
