@@ -5,8 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: repeating-linear-gradient(rgb(237, 216, 233),
-   rgb(237, 216, 233) 45px, white 45px, white 90px);
+  background: repeating-linear-gradient(45deg, rgb(228, 192, 250),
+   rgb(228, 192, 250) 90px,rgb(239, 221, 251) 90px, rgb(239, 221, 251) 180px, white 180px, white 270px);
    cursor: url(watermelon.png), auto;
 }
 
@@ -17,7 +17,7 @@ code {
 }
 
 .titleBox{
-  background: rgb(245, 187, 214);
+  background: rgb(255, 201, 226);
    overflow: hidden;
    max-width: 345px;
    margin: 50px auto;
@@ -51,7 +51,7 @@ button{
   border-radius: 8px;
   font-size: 25px;
   font-weight:bold;
-  background-color: rgb(250, 172, 233);
+  background-color: rgb(251, 213, 242);
   border: 3px solid #000000; 
   margin: 0px 40px 10px 40px;
 }
@@ -59,7 +59,7 @@ button{
 button:hover{
   background-color:rgb(244, 115, 220);
   border: 3px solid #000000; 
-  cursor: url(watermelon.png), auto;
+  cursor: url(watermelon2.png), auto;
 }
 
 p {
