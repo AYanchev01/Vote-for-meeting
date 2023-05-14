@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import EventDuration from './components/EventDuration';
+import Calendar from './components/Calendar';
 
-function App() {
+const App: React.FC = () => {
+  const [selectedDuration, setSelectedDuration] = useState<number | 'all-day' | 'custom' | null>(null);
+  const [customDuration, setCustomDuration] = useState<number>(0);
+
+  const handleDurationSelection = (duration: number | 'all-day' | 'custom') => {
+    setSelectedDuration(duration);
+  };
+
+  const handleCustomDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const minutes = parseInt(event.target.value);
+    setCustomDuration(minutes);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Add your times</h1>
+      <EventDuration
+        onSelectDuration={handleDurationSelection}
+        onCustomDurationChange={handleCustomDurationChange}
+        customDuration={customDuration}
+      />
+      <Calendar selectedDuration={selectedDuration} customDuration={customDuration} />
     </div>
   );
-}
+};
 
 export default App;
