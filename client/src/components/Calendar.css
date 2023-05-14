@@ -1,0 +1,37 @@
+.calendar {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th {
+  background-color: #eee;
+  text-align: center;
+  padding: 8px;
+}
+
+.calendar td {
+  text-align: center;
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* .calendar td.selectable:hover {
+  background-color: #f5f5f5;
+} */
+
+.calendar td.selected {
+  background-color: blue;
+  color: white;
+}
+
+.before-current-date {
+  color: gray;
+}

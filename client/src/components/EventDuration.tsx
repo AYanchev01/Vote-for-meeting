@@ -6,7 +6,7 @@ interface DurationProps {
   customDuration: number;
 }
 
-const Duration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDurationChange, customDuration }) => {
+const EventDuration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDurationChange, customDuration }) => {
   const [selectedDuration, setSelectedDuration] = useState<number | 'all-day' | 'custom' | null>(null);
 
   const handleDurationSelection = (duration: number | 'all-day' | 'custom') => {
@@ -16,7 +16,7 @@ const Duration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDurationC
 
   return (
     <div>
-      <h2>Select Event Duration:</h2>
+      <h2>Select Event EventDuration:</h2>
       <div>
         <label>
           <input
@@ -84,4 +84,4 @@ const Duration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDurationC
   );
 };
 
-export default Duration;
+export default EventDuration;
