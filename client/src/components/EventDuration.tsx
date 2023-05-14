@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./EventDuration.css"
 
 interface DurationProps {
     onSelectDuration: (duration: number | 'all-day' | 'custom') => void;
@@ -17,7 +18,7 @@ const EventDuration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDura
     return (
         <div>
             <h2>Duration:</h2>
-            <div>
+            <div className='event-duration-options'>
                 <label>
                     <input
                         type="radio"

@@ -55,6 +55,10 @@ li>div:last-child {
   margin-left: 10px;
 }
 
+h1 {
+  padding-left: 10px;
+}
+
 h2 {
   padding-left: 40px;
 }
