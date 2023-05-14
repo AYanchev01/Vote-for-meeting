@@ -1,10 +1,9 @@
-import './App.css';
 import { useState } from 'react';
 
 function App() {
 
   const [dates,setDates]=useState([
-    {"id":1,"date": "12.05.2022", "time": "18:30","votes": 6},
+    {"id":1,"date": "12.05.2022","time": "18:30","votes": 6},
     {"id":2,"date": "12.05.2022","time": "19:30","votes": 0},
     {"id":3,"date": "13.05.2022","time": "18:30","votes": 1},
     {"id":4,"date": "13.05.2022","time": "19:30","votes": 4},
@@ -39,9 +38,13 @@ function App() {
       <div class="titleBox">
         <h1>Списък с дати и часове и гласове за тях</h1>
       </div>
-      <button onClick={sortLeastVoted} title="Натисни, за да видиш коя дата е с най-малко гласове"> Най-малко гласове</button>
-      <button onClick={sortMostVoted}title="Натисни, за да видиш коя дата е с най-много гласове"> Най-много гласове</button>
-
+      
+      <div className='buttonStyle'>
+        <p>Подреди по:</p>
+        <button onClick={sortLeastVoted} title="Натисни, за да видиш коя дата е с най-малко гласове"> Най-малко гласове</button>
+        <button onClick={sortMostVoted}title="Натисни, за да видиш коя дата е с най-много гласове"> Най-много гласове</button>
+      </div>
+      
       <div className="listBox">
       {dates && dates.map(task =>
         {
