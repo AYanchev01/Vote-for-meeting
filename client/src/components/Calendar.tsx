@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import './Calendar.css';
 
+const timeOptions: string[] = [];
+
+for (let hour = 0; hour < 24; hour++) {
+  for (let minute = 0; minute < 60; minute += 15) {
+    const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+    const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+    timeOptions.push(`${formattedHour}:${formattedMinute}`);
+  }
+}
 
 interface CalendarProps {
   selectedDuration: number | 'all-day' | 'custom' | null;
@@ -10,17 +19,53 @@ interface CalendarProps {
 const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration }) => {
   const displayDuration = selectedDuration === 'custom' ? `${customDuration} minutes` : selectedDuration;
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const [startTimeInputs, setStartTimeInputs] = useState<{ [key: string]: string[] }>({});
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
+
+  const handleAddStartTime = (date: Date) => {
+    setStartTimeInputs({
+      ...startTimeInputs,
+      [date.toISOString()]: [...(startTimeInputs[date.toISOString()] ?? []), '']
+    });
+  };
+
+  const handleDeleteStartTime = (date: Date, index: number) => {
+    setStartTimeInputs({
+      ...startTimeInputs,
+      [date.toISOString()]: startTimeInputs[date.toISOString()].filter((_, i) => i !== index)
+    });
+  };
+
+  const handleStartTimeChange = (date: Date, index: number, value: string) => {
+    setStartTimeInputs({
+      ...startTimeInputs,
+      [date.toISOString()]: startTimeInputs[date.toISOString()].map((time, i) => (i === index ? value : time))
+    });
+  };
+
 
 const handleDateClick = (date: Date) => {
   const isDateSelected = selectedDates.some((selectedDate) => selectedDate.toDateString() === date.toDateString());
 
   if (isDateSelected) {
-    setSelectedDates(selectedDates.filter((selectedDate) => selectedDate.toDateString() !== date.toDateString()));
+    // If the date is already selected, remove it and its associated starting times
+    const updatedSelectedDates = selectedDates.filter((selectedDate) => selectedDate.toDateString() !== date.toDateString());
+    setSelectedDates(updatedSelectedDates);
+    setStartTimeInputs((prevStartingTimes) => {
+      const updatedStartingTimes = { ...prevStartingTimes };
+      delete updatedStartingTimes[date.toISOString()];
+      return updatedStartingTimes;
+    });
   } else {
+    // If the date is not selected, add it and initialize its starting times to an empty array
     setSelectedDates([...selectedDates, date]);
+    setStartTimeInputs((prevStartingTimes) => {
+      const updatedStartingTimes = { ...prevStartingTimes };
+      updatedStartingTimes[date.toISOString()] = [];
+      return updatedStartingTimes;
+    });
   }
 };
 
@@ -100,14 +145,32 @@ const renderCalendar = () => {
 
   return (
     <div>
-      <h1>Calendar Component</h1>
+      <h2>Dates</h2>
       <div className="calendar">
         {renderCalendar()}
       </div>
       <h2>Selected Dates:</h2>
       <ul>
         {selectedDates.map((date) => (
-          <li key={date.toISOString()}>{date.toDateString()}</li>
+          <li key={date.toISOString()}>
+            <div>{date.toDateString()}</div>
+            {startTimeInputs[date.toISOString()]?.map((time, i) => (
+              <div key={i}>
+                <select
+                  value={time}
+                  onChange={(e) => handleStartTimeChange(date, i, e.target.value)}
+                >
+                  {timeOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <button onClick={() => handleDeleteStartTime(date, i)}>Delete</button>
+              </div>
+            ))}
+            <button onClick={() => handleAddStartTime(date)}>Add starting time</button>
+          </li>
         ))}
       </ul>
     </div>

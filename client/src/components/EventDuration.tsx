@@ -16,7 +16,7 @@ const EventDuration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDura
 
   return (
     <div>
-      <h2>Select Event EventDuration:</h2>
+      <h2>Duration:</h2>
       <div>
         <label>
           <input
