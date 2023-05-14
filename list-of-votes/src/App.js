@@ -49,7 +49,7 @@ function App() {
       {dates && dates.map(event =>
         {
           return (
-            <div key={event.id} class="list">{event.date},{event.time} - {event.votes} гласа</div>
+            <div key={event.id} class="list">{event.date}, {event.time} - {event.votes} гласа</div>
           )
         })}
      </div>

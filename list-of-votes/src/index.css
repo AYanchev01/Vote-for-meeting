@@ -33,6 +33,8 @@ h1{
 .list{
   font-size: 30px;
   max-width: 370px;
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
 }
 
 .listBox{
