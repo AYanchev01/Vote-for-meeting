@@ -5,7 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(158, 210, 217);
+  background: repeating-linear-gradient(rgb(237, 216, 233),
+   rgb(237, 216, 233) 45px, white 45px, white 90px);
+   cursor: url(watermelon.png), auto;
 }
 
 
@@ -21,7 +23,6 @@ code {
    margin: 50px auto;
    padding: 20px;
    border-radius: 15px;
-
 }
 
 h1{
@@ -36,7 +37,7 @@ h1{
 
 .listBox{
   border: 6px solid #000000; 
-  background-color: aliceblue;
+  background-color: rgb(255, 255, 255);
   overflow: hidden;
   max-width: 370px;
   margin: 50px auto;
@@ -48,19 +49,20 @@ button{
   border-radius: 8px;
   font-size: 25px;
   font-weight:bold;
-  background-color: rgb(248, 222, 234);
+  background-color: rgb(250, 172, 233);
   border: 3px solid #000000; 
   margin: 0px 40px 10px 40px;
 }
 
 button:hover{
-  background-color:rgb(244, 141, 225);
+  background-color:rgb(244, 115, 220);
   border: 3px solid #000000; 
+  cursor: url(watermelon.png), auto;
 }
 
 p {
   font-weight: bold;
-  font-size: 25px;   
+  font-size: 30px;   
 }
 
 .buttonStyle{
