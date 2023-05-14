@@ -7,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: repeating-linear-gradient(45deg, rgb(232, 202, 251),
    rgb(232, 202, 251) 90px,rgb(239, 224, 249) 90px, rgb(239, 224, 249) 180px, white 180px, white 270px);
-   cursor: url(cursor.png), auto;
+   cursor: url(arrow.png), auto;
 }
 
 
@@ -59,7 +59,7 @@ button{
 button:hover{
   background-color:rgb(244, 115, 220);
   border: 3px solid #000000; 
-  cursor: url(cursor2.png), auto;
+  cursor: url(arrow.png), auto;
 }
 
 p {
