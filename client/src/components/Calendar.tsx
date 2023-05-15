@@ -21,8 +21,27 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
     const [selectedDates, setSelectedDates] = useState<Date[]>([]);
     const [startTimeInputs, setStartTimeInputs] = useState<{ [key: string]: string[] }>({});
     const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
+    const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
+    const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
+
+
+    const handlePreviousMonth = () => {
+        if (currentMonth === 0) {
+            setCurrentMonth(11);
+            setCurrentYear(currentYear - 1);
+        } else {
+            setCurrentMonth(currentMonth - 1);
+        }
+    };
+
+    const handleNextMonth = () => {
+        if (currentMonth === 11) {
+            setCurrentMonth(0);
+            setCurrentYear(currentYear + 1);
+        } else {
+            setCurrentMonth(currentMonth + 1);
+        }
+    };
 
     const handleAddStartTime = (date: Date) => {
         setStartTimeInputs({
@@ -93,10 +112,13 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(currentYear, currentMonth, day);
             const isSelectable = date >= currentDate; // only allow selecting dates after today
-            const isSelected = selectedDates.some((selectedDate) => selectedDate.toDateString() === date.toDateString());
+            const isSelected = selectedDates.some(
+                (selectedDate) => selectedDate.toDateString() === date.toDateString()
+            );
             const isBeforeCurrentDate = date < currentDate;
 
-            const classNames = `calendar-day ${isSelectable ? 'selectable' : ''} ${isSelected ? 'selected' : ''} ${isBeforeCurrentDate ? 'before-current-date' : ''}`;
+            const classNames = `calendar-day ${isSelectable ? 'selectable' : ''
+                } ${isSelected ? 'selected' : ''} ${isBeforeCurrentDate ? 'before-current-date' : ''}`;
 
             calendarDays.push(
                 <td
@@ -124,21 +146,27 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
         }
 
         return (
-            <table>
-                <thead>
-                    <tr>
-                        <th colSpan={7}>{monthNames[currentMonth]} {currentYear}</th>
-                    </tr>
-                    <tr>
-                        {daysOfWeek.map(day => (
-                            <th key={day}>{day.slice(0, 3)}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {calendarRows}
-                </tbody>
-            </table>
+            <>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colSpan={7}>
+                                <button onClick={handlePreviousMonth}>Previous</button>
+                                <button onClick={handleNextMonth}>Next</button>
+                                {monthNames[currentMonth]} {currentYear}
+                            </th>
+                        </tr>
+                        <tr>
+                            {daysOfWeek.map((day) => (
+                                <th key={day}>{day.slice(0, 3)}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {calendarRows}
+                    </tbody>
+                </table>
+            </>
         );
     };
 
