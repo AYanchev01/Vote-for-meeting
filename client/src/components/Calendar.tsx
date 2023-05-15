@@ -151,9 +151,11 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
                     <thead>
                         <tr>
                             <th colSpan={7}>
-                                <button onClick={handlePreviousMonth}>Previous</button>
+                                <button onClick={handlePreviousMonth}>Prev</button>
+                                <span className="calendar-month-year">
+                                    {monthNames[currentMonth]} {currentYear}
+                                </span>
                                 <button onClick={handleNextMonth}>Next</button>
-                                {monthNames[currentMonth]} {currentYear}
                             </th>
                         </tr>
                         <tr>
@@ -181,7 +183,7 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
                         <div>
                             <div>{date.toDateString()}</div>
                             {startTimeInputs[date.toISOString()]?.map((time, i) => (
-                                <div key={i}>
+                                <div key={i} className="start-time">
                                     <select
                                         value={time}
                                         onChange={(e) => handleStartTimeChange(date, i, e.target.value)}
@@ -204,7 +206,6 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
             </ul>
         </div>
     );
-
 
 };
 
