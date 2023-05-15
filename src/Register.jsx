@@ -9,16 +9,21 @@ export const Register = (props) => {
         event.preventDefault();
         var users = JSON.parse(localStorage.getItem('users')) || {};
 
-        if (pass !== confirmPass){
+        if(!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(pass)) {
+            alert('Password must contain 6 to 16 characters, at least one digit and at least one letter!');
+        }
+        else if (pass !== confirmPass){
             alert('Passwords don\'t match!');
         }
-        else if (users[email]) {
+        else if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+            alert('Invalid email!');
+        }
+        else if (users[email]){
             alert('Email already registered');
           }
-        else{
+        else {
             users[email] = { pass };
             localStorage.setItem('users', JSON.stringify(users));
-            console.log(localStorage);
             alert('Registration sucessful!');
         }
     }

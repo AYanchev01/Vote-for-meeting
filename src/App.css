@@ -15,11 +15,20 @@ form {
   background-repeat: no-repeat;
   font-family: 'Vibur', cursive;
   opacity: .95;
-
   justify-content: center;
   display: flex;
   margin-top: 5%;
-  
+}
+
+.auth-form ,.login-form, .register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+label {
+  color:#8ceabb;
 }
 
 .box {
@@ -29,21 +38,12 @@ form {
   align-items: left;
 }
 
-
 .form-header {
   font-size: 250%;
   font-family: 'Playfair Display', serif;
   color: #8ceabb;
   margin-bottom: 10%;
   margin-top: 10%;
-}
-
-.auth-form ,.login-form, .register-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  
 }
 
 input {
@@ -55,41 +55,30 @@ input {
   margin-bottom: 5%;
 }
 
-label {
-  color:#8ceabb;
-}
-
 .submit {
   outline: none;
   border: none;
   height: 50px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 3%;
-  background-image: linear-gradient(160deg, #8ceabb 0%, #378f7b 100%);
   width: 40%;
   border-radius: 5px;
+  margin-top: 3%;
+  background-image: linear-gradient(160deg, #8ceabb 0%, #378f7b 100%);
   color:#354152;
+  cursor: pointer;
 } 
 
 .link-btn {
   outline: none;
   border: none;
   height: 50px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 5% auto;
-  
-  letter-spacing: 0.05em;
   width: 280px;
+  letter-spacing: 0.05em;
+  border-radius: 5px;
+  margin: 5% auto;
   background: none;
   color: white;
   text-decoration: underline;
-  margin: none;
-  
-  border-radius: 5px;
-  outline: none;
-  border: none;
+  cursor: pointer;
 }
 
 button:hover {
