@@ -10,9 +10,9 @@ export const Login = (props) => {
         var user = users[email];
         
         if (!user || user.pass !== pass) {
-            console.log(localStorage);
             alert('Invalid email or password');
-        }else{
+        }
+        else {
             alert('Login successful!');
         }
     }
