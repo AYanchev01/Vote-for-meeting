@@ -151,11 +151,11 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
                     <thead>
                         <tr>
                             <th colSpan={7}>
-                                <button onClick={handlePreviousMonth}>Prev</button>
+                                <button onClick={handlePreviousMonth}>⬅️</button>
                                 <span className="calendar-month-year">
                                     {monthNames[currentMonth]} {currentYear}
                                 </span>
-                                <button onClick={handleNextMonth}>Next</button>
+                                <button onClick={handleNextMonth}>➡️</button>
                             </th>
                         </tr>
                         <tr>
@@ -176,7 +176,7 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
         <div>
             <h2>Dates</h2>
             <div className="calendar">{renderCalendar()}</div>
-            <h2>Selected Dates:</h2>
+            <h2>Times for selected dates:</h2>
             <ul>
                 {selectedDates.map((date) => (
                     <li key={date.toISOString()}>
@@ -194,12 +194,12 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
                                             </option>
                                         ))}
                                     </select>
-                                    <button onClick={() => handleDeleteStartTime(date, i)}>Delete</button>
+                                    <button onClick={() => handleDeleteStartTime(date, i)}>🗑️</button>
                                 </div>
                             ))}
                         </div>
                         <div>
-                            <button onClick={() => handleAddStartTime(date)}>Add starting time</button>
+                            <button onClick={() => handleAddStartTime(date)}>➕ Add starting time</button>
                         </div>
                     </li>
                 ))}

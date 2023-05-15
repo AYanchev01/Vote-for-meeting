@@ -3,3 +3,20 @@
   justify-content: center;
   display: flex;
 }
+.event-duration-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.duration-option {
+  padding: 4px 4px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.duration-option.selected {
+  background-color: #0066b2;
+  color: white;
+}

@@ -34,7 +34,7 @@
 } */
 
 .calendar td.selected {
-  background-color: blue;
+  background-color: #0066b2;
   color: white;
 }
 
@@ -78,6 +78,9 @@ button {
   padding: 4px 4px;
   margin-right: 8px;
   margin-left: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .start-time select {
@@ -87,4 +90,8 @@ button {
   display: inline-block;
   width: 14ch;
   text-align: center;
+}
+
+.calendar button {
+  font-size: 20px;
 }
