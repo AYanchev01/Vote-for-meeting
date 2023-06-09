@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id() @default(autoincrement())
+  email        String   @unique
+  password     String
+  name         String
+  votedFor     Vote[]
+  // @@index([name])
+  invitedEvent Event[]  @relation("Participants")
+  createdEvent Event[]  @relation("Created by")
+  createdAt    DateTime
+  updatedAt    DateTime
+}
+
+model Event {
+  id           Int    @id @default(autoincrement())
+  name         String
+  //options Timestamp[]
+  votes        Vote[] //do i need them here
+  createdBy    User   @relation("Created by", fields: [userId], references: [id]) //Added by
+  participants User[] @relation("Participants")
+  userId       Int
+}
+
+model Vote {
+  id             Int        @id @default(autoincrement())
+  votedBy        User       @relation(fields: [userId], references: [id])
+  userId         Int
+  // Timestamp   Timestamp? @relation(fields: [timestampId], references: [id])
+  // timestampId Int?
+  votedTo        Event      @relation(fields: [eventId], references: [id])
+  eventId        Int
+  avaliableTimes DateTime[]
+  //@@unique([userId, timestampId])
+}
+
+// model Timestamp {
+//   id          Int        @id @default(autoincrement())
+//   dateAndTime DateTime[] @unique
+//   votes       Vote[]
+//   Event       Event?     @relation(fields: [eventId], references: [id]) //many to many?
+//   eventId     Int?
+// }
