@@ -15,6 +15,7 @@ CREATE TABLE "Event" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
+    "avaliableTimes" TIMESTAMP(3)[],
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
@@ -24,7 +25,6 @@ CREATE TABLE "Vote" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "eventId" INTEGER NOT NULL,
-    "avaliableTimes" TIMESTAMP(3)[],
 
     CONSTRAINT "Vote_pkey" PRIMARY KEY ("id")
 );
@@ -37,6 +37,12 @@ CREATE TABLE "_Participants" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event_name_userId_key" ON "Event"("name", "userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Vote_userId_eventId_key" ON "Vote"("userId", "eventId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_Participants_AB_unique" ON "_Participants"("A", "B");
