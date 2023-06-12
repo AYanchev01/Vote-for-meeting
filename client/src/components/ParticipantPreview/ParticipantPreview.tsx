@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const EventPreview: React.FC = () => {
+const ParticipantPreview: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const [event, setEvent] = useState<any>(null);
 
@@ -23,7 +23,7 @@ const EventPreview: React.FC = () => {
 
   return (
     <div>
-      <h1>Event Preview</h1>
+      <h1>Participant Preview</h1>
       <p>Name: {event.name}</p>
       <p>Created By: {event.createdBy.name}</p>
       <p>Created At: {new Date(event.createdAt).toLocaleDateString()}</p>
@@ -32,4 +32,4 @@ const EventPreview: React.FC = () => {
   );
 };
 
-export default EventPreview;
+export default ParticipantPreview;

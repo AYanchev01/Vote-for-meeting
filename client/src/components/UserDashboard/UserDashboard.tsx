@@ -31,7 +31,8 @@ const UserDashboard: React.FC = () => {
   };
 
   const handleEventClick = (eventId: number) => {
-    navigate(`/events/${eventId}`);
+    navigate(`/events/participant/${eventId}`);
+    // or navigate to organizer preview?
   };
 
   return (
