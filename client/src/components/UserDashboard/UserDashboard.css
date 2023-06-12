@@ -1,0 +1,34 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+}
+
+.website-name {
+  margin-left: 10px;
+}
+
+.create-event-btn {
+  margin-right: 10px;
+}
+
+.events-list {
+  padding: 20px;
+}
+
+.event-item {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.event-name {
+  font-weight: bold;
+}
+
+.event-creator, .event-date {
+  color: #555;
+}
