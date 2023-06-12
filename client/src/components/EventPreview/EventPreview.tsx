@@ -27,6 +27,7 @@ const EventPreview: React.FC = () => {
       <p>Name: {event.name}</p>
       <p>Created By: {event.createdBy.name}</p>
       <p>Created At: {new Date(event.createdAt).toLocaleDateString()}</p>
+      <p>Duration: {event.duration}</p>
     </div>
   );
 };

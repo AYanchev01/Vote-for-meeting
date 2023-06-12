@@ -20,3 +20,9 @@
   background-color: #0066b2;
   color: white;
 }
+
+.finish-creation {
+  justify-content: center;
+  display: flex;
+  margin: auto;
+}
