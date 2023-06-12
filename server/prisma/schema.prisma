@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id() @default(autoincrement())
+  email        String   @unique
+  password     String
+  name         String
+  votedFor     Vote[]
+  invitedEvent Event[]  @relation("Participants")
+  createdEvent Event[]  @relation("Created by")
+  createdAt    DateTime
+  updatedAt    DateTime
+}
+
+model Event {
+  id             Int        @id @default(autoincrement())
+  name           String
+  votes          Vote[]
+  createdBy      User       @relation("Created by", fields: [userId], references: [id])
+  participants   User[]     @relation("Participants")
+  userId         Int
+  avaliableTimes DateTime[]
+  createdAt      DateTime
+  updatedAt      DateTime
+  //duration
+
+  @@unique([name, userId]) //so that a user cant create two events with the same name
+}
+
+model Vote {
+  id            Int        @id @default(autoincrement())
+  votedBy       User       @relation(fields: [userId], references: [id])
+  userId        Int
+  votedTo       Event      @relation(fields: [eventId], references: [id])
+  eventId       Int
+  createdAt     DateTime
+  updatedAt     DateTime
+  selectedTimes DateTime[] // array of the selected options from availableTimes so that we know who voted for what
+
+  @@unique([userId, eventId]) // so that a user cant vote multiple times for the same event
+}
