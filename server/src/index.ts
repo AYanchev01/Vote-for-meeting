@@ -3,7 +3,9 @@ import cors from 'cors';
 import mockData from './mockData';
 import fs from 'fs';
 import path from 'path';
+import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient()
 const app = express();
 const PORT = process.env.PORT || 3001;
 
