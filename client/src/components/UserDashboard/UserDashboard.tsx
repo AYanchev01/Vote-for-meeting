@@ -39,7 +39,7 @@ const UserDashboard: React.FC = () => {
       {/* Navigation Bar */}
       <div className="navbar">
         <span className="website-name">Doodle</span>
-        <button className="create-event-btn" onClick={handleCreateEvent}>Create Event</button>
+        <button className="create-event-btn" onClick={handleCreateEvent}>+ Create</button>
       </div>
 
       {/* Events List */}

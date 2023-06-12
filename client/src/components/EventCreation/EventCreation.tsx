@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EventDuration from './EventDuration';
 import Calendar from './Calendar';
+import './EventCreation.css'
 
 const EventCreation: React.FC = () => {
+  const [eventName, setEventName] = React.useState<string>(''); // State for storing the event name
   const [selectedDuration, setSelectedDuration] = React.useState<number | 'all-day' | 'custom' | null>(null);
   const [customDuration, setCustomDuration] = React.useState<number>(0);
 
@@ -16,9 +17,24 @@ const EventCreation: React.FC = () => {
     setCustomDuration(minutes);
   };
 
+  const handleEventNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEventName(event.target.value);
+  };
+
   return (
     <div>
-      <h1>Add your times</h1>
+      <div className="navbar">
+        <span className="website-name">Doodle</span>
+      </div>
+      <h1>Create a group poll</h1>
+      <h2>Title</h2>
+      <input
+        className="event-name-input"
+        type="text"
+        value={eventName}
+        onChange={handleEventNameChange}
+        placeholder="What's the occasion ?"
+      />
       <EventDuration
         onSelectDuration={handleDurationSelection}
         onCustomDurationChange={handleCustomDurationChange}
