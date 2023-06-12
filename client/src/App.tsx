@@ -1,30 +1,27 @@
-import React, { useState } from 'react';
-import EventDuration from './components/EventDuration';
-import Calendar from './components/Calendar';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import UserDashboard from './components/UserDashboard/UserDashboard';
+import EventPreview from './components/EventPreview/EventPreview';
+import EventCreation from './components/EventCreation/EventCreation';
+import Login from './components/Login/Login';
 
 const App: React.FC = () => {
-  const [selectedDuration, setSelectedDuration] = useState<number | 'all-day' | 'custom' | null>(null);
-  const [customDuration, setCustomDuration] = useState<number>(0);
-
-  const handleDurationSelection = (duration: number | 'all-day' | 'custom') => {
-    setSelectedDuration(duration);
-  };
-
-  const handleCustomDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const minutes = parseInt(event.target.value);
-    setCustomDuration(minutes);
-  };
-
   return (
-    <div>
-      <h1>Add your times</h1>
-      <EventDuration
-        onSelectDuration={handleDurationSelection}
-        onCustomDurationChange={handleCustomDurationChange}
-        customDuration={customDuration}
-      />
-      <Calendar selectedDuration={selectedDuration} customDuration={customDuration} />
-    </div>
+    <Router>
+      <Routes>
+        {/* Route for Login - This is the default route */}
+        <Route path="/" element={<Login />} />
+
+        {/* Route for User Dashboard */}
+        <Route path="/dashboard" element={<UserDashboard />} />
+
+        {/* Route for Event Preview */}
+        <Route path="/events/:eventId" element={<EventPreview />} />
+
+        {/* Route for Event Creation */}
+        <Route path="/create-event" element={<EventCreation />} />
+      </Routes>
+    </Router>
   );
 };
 
