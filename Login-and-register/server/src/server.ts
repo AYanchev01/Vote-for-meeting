@@ -1,39 +1,27 @@
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
+import bodyParser from 'body-parser';
+import authRouter from './router/auth-router';
 import dotenv from 'dotenv';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
+import path from 'path'
 
-dotenv.config();
 const SALT_ROUNDS = process.env.SALT_ROUNDS || 10;
 const prisma = new PrismaClient({log: ['query']});
-
+dotenv.config();
 
 const PORT = Number(process.env.SERVER_PORT || 3000);
-const app = express();
 
-app.get('^$', (req, res, next) => {
-    fs.readFile(path.resolve('./build/index.html'), 'utf-8', (error, data) => {
-        if(error){
-            console.log(error);
-            return res.status(500);
-        }
-        return res.send(data.replace('<div id= "root"/>', '<div id="root">${ReactDOMServer.renderToString(<App/>)}</div>'));
-    })
-})
+const app = express(); 
+app.use(express.static(path.join(__dirname, '../../client/build')));
+app.use(bodyParser.json());
 
-app.use(express.static(path.resolve(__dirname, '..', 'build')))
+// Register the auth router
+//app.use('/api/auth', authRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+});
 
 app.listen(PORT, () => {
-    console.log(`App launched on ${PORT}`);
-  });
-
-// async function main() {
-//     const password = await bcrypt.hash('password', 10);
-
-// }
-// app.use(express.json());
-
-// app.get('/', (request, response) => {
-//     response.send('Hello from server');
-// });
+  console.log(`Listening on port ${PORT}`);
+});
