@@ -25,6 +25,7 @@ model User {
 model Event {
   id             Int        @id @default(autoincrement())
   name           String
+  duration       String
   votes          Vote[]
   createdBy      User       @relation("Created by", fields: [userId], references: [id])
   participants   User[]     @relation("Participants")
