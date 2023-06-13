@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .website-name {
+    margin-left: 10px;
+    font-size: 24px;
+  }
+  
+  .inv-button {
+    border-radius: 2px;
+    background-color: #4caf50;
+    justify-content: center;
+    display: flex;
+    margin: auto;
+  }
+
+  .inv-button:hover{
+    background-color:#348f37;
+    cursor:pointer;
+  }
