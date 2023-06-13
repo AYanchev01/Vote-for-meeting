@@ -14,6 +14,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Event" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "duration" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "avaliableTimes" TIMESTAMP(3)[],
     "createdAt" TIMESTAMP(3) NOT NULL,
