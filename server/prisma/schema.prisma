@@ -30,10 +30,9 @@ model Event {
   createdBy      User       @relation("Created by", fields: [userId], references: [id])
   participants   User[]     @relation("Participants")
   userId         Int
-  avaliableTimes DateTime[]
+  availableTimes DateTime[]
   createdAt      DateTime
   updatedAt      DateTime
-  //duration
 
   @@unique([name, userId]) //so that a user cant create two events with the same name
 }
@@ -44,9 +43,9 @@ model Vote {
   userId        Int
   votedTo       Event      @relation(fields: [eventId], references: [id])
   eventId       Int
+  selectedTimes DateTime[] // array of the selected options from availableTimes so that we know who voted for what
   createdAt     DateTime
   updatedAt     DateTime
-  selectedTimes DateTime[] // array of the selected options from availableTimes so that we know who voted for what
 
   @@unique([userId, eventId]) // so that a user cant vote multiple times for the same event
 }
