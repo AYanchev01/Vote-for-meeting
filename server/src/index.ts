@@ -36,38 +36,38 @@ app.get('/api/events/:eventId', (req, res) => {
   }
 });
 
-app.post('/api/events', (req, res) => {
-    // Extract data from the request body
-    const { name, duration, customDuration } = req.body;
-    
-    const newId = mockData.length + 1;
-    
-    // Create a new event object
-    const newEvent = {
-        id: newId,
-        name: name,
-        createdBy: {
-            name: 'User',
-        },
-        createdAt: new Date().toISOString(),
-        duration: duration,
-        // customDuration ?
-    };
 
-    // Write new event to file for testing purpouses
-    mockData.push(newEvent);
 
-    const fileContent = `const mockData = ${JSON.stringify(mockData, null, 2)};\n\nexport default mockData;`;
+app.post('/api/events', async (req, res) => {
+    try {
+        const { name, duration, availableTimes } = req.body;
 
-    fs.writeFile(path.join(__dirname, 'mockData.ts'), fileContent, (err) => {
-        if (err) {
-        console.error('Error writing to file:', err);
-        return res.status(500).json({ message: 'Internal Server Error' });
-        }
+        const userId = 1; // this should be replaced with the actual user ID
+        const eventId = 1; // this should be replaced with the actual event ID
+        const data = {
+          id : eventId,
+          name,
+          userId,
+          avaliableTimes : availableTimes,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          duration,
+        };
+
+        console.log("Data to be inserted: ", data)
+        // Create a new event object in the database
+
+        // const newEvent = await prisma.event.create({
+        //     data: data,
+        // });
 
         // Respond with the newly created event
-        res.status(201).json(newEvent);
-    });
+        // res.status(201).json(newEvent);
+        res.status(201).json(data);
+    } catch (error) {
+        console.error('Error creating event:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 });
 
 app.get('/events/participate/:eventId', (req, res) => {

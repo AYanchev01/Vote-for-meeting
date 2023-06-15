@@ -12,14 +12,19 @@ for (let hour = 0; hour < 24; hour++) {
 }
 
 interface CalendarProps {
-    selectedDuration: number | 'all-day' | 'custom' | null;
-    customDuration: number;
+    selectedDates: Date[];
+    setSelectedDates: (dates: Date[]) => void;
+    startTimeInputs: { [key: string]: string[] };
+    setStartTimeInputs: (startTimeInputs: { [key: string]: string[] }) => void;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration }) => {
-    const displayDuration = selectedDuration === 'custom' ? `${customDuration} minutes` : selectedDuration;
-    const [selectedDates, setSelectedDates] = useState<Date[]>([]);
-    const [startTimeInputs, setStartTimeInputs] = useState<{ [key: string]: string[] }>({});
+const Calendar: React.FC<CalendarProps> = ({
+    selectedDates,
+    setSelectedDates,
+    startTimeInputs,
+    setStartTimeInputs,
+}) => {
+
     const currentDate = new Date();
     const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
     const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
@@ -46,7 +51,7 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
     const handleAddStartTime = (date: Date) => {
         setStartTimeInputs({
             ...startTimeInputs,
-            [date.toISOString()]: [...(startTimeInputs[date.toISOString()] ?? []), '']
+            [date.toISOString()]: [...(startTimeInputs[date.toISOString()] ?? []), '00:00']
         });
     };
 
@@ -64,30 +69,30 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDuration, customDuration })
         });
     };
 
-
     const handleDateClick = (date: Date) => {
-        const isDateSelected = selectedDates.some((selectedDate) => selectedDate.toDateString() === date.toDateString());
+        const isDateSelected = selectedDates.some(
+            (selectedDate) => selectedDate.toDateString() === date.toDateString()
+        );
 
         if (isDateSelected) {
             // If the date is already selected, remove it and its associated starting times
-            const updatedSelectedDates = selectedDates.filter((selectedDate) => selectedDate.toDateString() !== date.toDateString());
+            const updatedSelectedDates = selectedDates.filter(
+                (selectedDate) => selectedDate.toDateString() !== date.toDateString()
+            );
             setSelectedDates(updatedSelectedDates);
-            setStartTimeInputs((prevStartingTimes) => {
-                const updatedStartingTimes = { ...prevStartingTimes };
-                delete updatedStartingTimes[date.toISOString()];
-                return updatedStartingTimes;
-            });
+
+            const updatedStartingTimes = { ...startTimeInputs };
+            delete updatedStartingTimes[date.toISOString()];
+            setStartTimeInputs(updatedStartingTimes);
         } else {
             // If the date is not selected, add it and initialize its starting times to an empty array
             setSelectedDates([...selectedDates, date]);
-            setStartTimeInputs((prevStartingTimes) => {
-                const updatedStartingTimes = { ...prevStartingTimes };
-                updatedStartingTimes[date.toISOString()] = [];
-                return updatedStartingTimes;
-            });
+
+            const updatedStartingTimes = { ...startTimeInputs };
+            updatedStartingTimes[date.toISOString()] = [];
+            setStartTimeInputs(updatedStartingTimes);
         }
     };
-
 
     const renderCalendar = () => {
         const monthNames = [

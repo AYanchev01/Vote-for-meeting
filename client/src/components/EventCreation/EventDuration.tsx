@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
-import "./EventDuration.css"
+import "./EventDuration.css";
 
 interface DurationProps {
-  onSelectDuration: (duration: number | 'all-day' | 'custom') => void;
-  onCustomDurationChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  customDuration: number;
+  onDisplayDurationChange: (displayDuration: string) => void;
 }
 
-const EventDuration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDurationChange, customDuration }) => {
+const EventDuration: React.FC<DurationProps> = ({ onDisplayDurationChange }) => {
   const [selectedDuration, setSelectedDuration] = useState<number | 'all-day' | 'custom' | null>(null);
+  const [customDuration, setCustomDuration] = useState<number>(0);
 
   const handleDurationSelection = (duration: number | 'all-day' | 'custom') => {
     setSelectedDuration(duration);
-    onSelectDuration(duration);
+    let displayDuration = '';
+
+    if (duration === 'all-day') {
+      displayDuration = 'All Day';
+    } else if (duration === 'custom') {
+      displayDuration = `${customDuration} minutes`;
+    } else {
+      displayDuration = `${duration} minutes`;
+    }
+
+    onDisplayDurationChange(displayDuration);
+  };
+
+  const handleCustomDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const minutes = parseInt(event.target.value);
+    setCustomDuration(minutes);
+    if (selectedDuration === 'custom') {
+      onDisplayDurationChange(`${minutes} minutes`);
+    }
   };
 
   return (
@@ -54,7 +71,7 @@ const EventDuration: React.FC<DurationProps> = ({ onSelectDuration, onCustomDura
             <input
               type="number"
               value={customDuration}
-              onChange={onCustomDurationChange}
+              onChange={handleCustomDurationChange}
               placeholder="Enter custom duration"
             />
             <span>minutes</span>

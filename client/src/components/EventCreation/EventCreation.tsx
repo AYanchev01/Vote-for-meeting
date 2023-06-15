@@ -6,30 +6,39 @@ import './EventCreation.css'
 
 const EventCreation: React.FC = () => {
   const [eventName, setEventName] = useState<string>('');
-  const [selectedDuration, setSelectedDuration] = useState<number | 'all-day' | 'custom' | null>(null);
-  const [customDuration, setCustomDuration] = useState<number>(0);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const [startTimeInputs, setStartTimeInputs] = useState<{ [key: string]: string[] }>({});
+ 
+  const [displayDuration, setDisplayDuration] = useState<string>('');
   const navigate = useNavigate();
-
-  const handleDurationSelection = (duration: number | 'all-day' | 'custom') => {
-    setSelectedDuration(duration);
-  };
-
-  const handleCustomDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const minutes = parseInt(event.target.value);
-    setCustomDuration(minutes);
-  };
 
   const handleEventNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEventName(event.target.value);
   };
 
   const handleCreateEvent = () => {
-    // Create the event object
-    const event = {
-      name: eventName,
-      duration: selectedDuration,
-      customDuration : customDuration
-    };
+      // Combine date portions with time portions to create DateTime[] array
+      const availableTimes: Date[]= [];
+
+      selectedDates.forEach((date) => {
+          const dateISOString = date.toISOString();
+          const timeArray = startTimeInputs[dateISOString];
+          if (timeArray) {
+              timeArray.forEach((time) => {
+                  const [hours, minutes] = time.split(':');
+                  const dateTime = new Date(date);
+                  dateTime.setUTCHours(Number(hours));
+                  dateTime.setUTCMinutes(Number(minutes));
+                  availableTimes.push(dateTime);
+              });
+          }
+      });
+
+      const event = {
+          name: eventName,
+          duration: displayDuration,
+          availableTimes, 
+      };
 
     // POST request to create a new event
     fetch('http://localhost:3001/api/events', {
@@ -39,7 +48,6 @@ const EventCreation: React.FC = () => {
     })
       .then(response => response.json())
       .then(newEvent => {
-        // Navigate to the new event's page
         navigate(`/events/organizer/${newEvent.id}`);
       })
       .catch(error => console.error('Error creating event:', error));
@@ -60,11 +68,14 @@ const EventCreation: React.FC = () => {
         placeholder="What's the occasion ?"
       />
       <EventDuration
-        onSelectDuration={handleDurationSelection}
-        onCustomDurationChange={handleCustomDurationChange}
-        customDuration={customDuration}
+        onDisplayDurationChange={(displayDuration) => setDisplayDuration(displayDuration)}
       />
-      <Calendar selectedDuration={selectedDuration} customDuration={customDuration} />
+      <Calendar
+        selectedDates={selectedDates}
+        setSelectedDates={setSelectedDates}
+        startTimeInputs={startTimeInputs}
+        setStartTimeInputs={setStartTimeInputs}
+      />
       {/* Button to create event */}
       <button
         className="finish-creation"
