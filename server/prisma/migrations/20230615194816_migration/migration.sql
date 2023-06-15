@@ -14,8 +14,9 @@ CREATE TABLE "User" (
 CREATE TABLE "Event" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "duration" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
-    "avaliableTimes" TIMESTAMP(3)[],
+    "availableTimes" TIMESTAMP(3)[],
     "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -27,9 +28,9 @@ CREATE TABLE "Vote" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "eventId" INTEGER NOT NULL,
+    "selectedTimes" TIMESTAMP(3)[],
     "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "selectedTimes" TIMESTAMP(3)[],
 
     CONSTRAINT "Vote_pkey" PRIMARY KEY ("id")
 );

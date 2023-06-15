@@ -69,3 +69,12 @@ app.post('/api/events', (req, res) => {
         res.status(201).json(newEvent);
     });
 });
+
+app.get('/events/participate/:eventId', (req, res) => {
+    const eventId = req.params.eventId;
+
+    // Logic to add the event with eventId to the user's events in the database
+    // Redirect to participant preview of event
+
+    res.redirect(`http://localhost:3000/events/participant/${eventId}`);
+});
