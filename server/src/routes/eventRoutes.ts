@@ -18,28 +18,31 @@ router.post('/api/events', async (req: Request, res: Response) => {
     try {
         const { name, duration, availableTimes } = req.body;
 
-        const userId = 1; // this should be replaced with the actual user ID
-        const eventId = 1; // this should be replaced with the actual event ID
+        const newUser = await prisma.user.create({
+          data: {
+            email: "Some email",
+            password: "pass",
+            name: "naem",
+          }
+        });
+
+        const userId = newUser.id;
+
         const data = {
-          id : eventId,
           name,
-          userId,
-          avaliableTimes : availableTimes,
-          createdAt: new Date(),
-          updatedAt: new Date(),
           duration,
+          userId,
+          availableTimes,
         };
 
         console.log("Data to be inserted: ", data)
-        // Create a new event object in the database
 
-        // const newEvent = await prisma.event.create({
-        //     data: data,
-        // });
+        const newEvent = await prisma.event.create({
+            data: data,
+        });
 
-        // Respond with the newly created event
-        // res.status(201).json(newEvent);
-        res.status(201).json(data);
+        //Respond with the newly created event
+        res.status(201).json(newEvent);
     } catch (error) {
         console.error('Error creating event:', error);
         res.status(500).json({ message: 'Internal Server Error' });
