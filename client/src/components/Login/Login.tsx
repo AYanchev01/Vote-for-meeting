@@ -16,7 +16,6 @@ export const Login: React.FC = () => {
     if (!user || user.pass !== pass) {
       alert("Invalid email or password");
     } else {
-      alert("Login successful!");
       navigate("/dashboard");
     }
   };
