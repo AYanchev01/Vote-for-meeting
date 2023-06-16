@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import './UserDashboard.css';
 
 type Event = {
-  id: number;
+  id: string;
   name: string;
+  duration: string;
   createdBy: {
     name: string;
   };
-  createdAt: string;
 };
 
 const UserDashboard: React.FC = () => {
@@ -17,12 +17,12 @@ const UserDashboard: React.FC = () => {
 
   useEffect(() => {
     // Fetch events from server 
-    fetch('http://localhost:3001/api/events')
+    fetch('http://localhost:3001/api/user/events')
       .then((response) => response.json())
       .then((data) => {
         console.log('Data fetched: ', data);
         setEvents(data);
-       })
+      })
       .catch((error) => console.error('Error fetching events:', error));
   }, []);
 
@@ -30,9 +30,9 @@ const UserDashboard: React.FC = () => {
     navigate('/create-event');
   };
 
-  const handleEventClick = (eventId: number) => {
-    navigate(`/events/participant/${eventId}`);
-    // or navigate to organizer preview?
+  const handleEventClick = (eventId: string) => {
+    // Navigate to the EventPage component with the event ID
+    navigate(`/events/participate/${eventId}`);
   };
 
   return (
@@ -48,8 +48,8 @@ const UserDashboard: React.FC = () => {
         {events.map((event) => (
           <div key={event.id} className="event-item" onClick={() => handleEventClick(event.id)}>
             <div className="event-name">{event.name}</div>
+            <div className="event-duration">{event.duration}</div>
             <div className="event-creator">{event.createdBy.name}</div>
-            <div className="event-date">{new Date(event.createdAt).toLocaleDateString()}</div>
           </div>
         ))}
       </div>
