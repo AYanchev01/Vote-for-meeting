@@ -8,8 +8,7 @@ router.post('/', async (req, res) => {
         const user = await authService.login(data);
         console.log("-----------------------", user?.email);
         if(user){
-            //res.json(user);
-            res.sendStatus(200);
+            res.json(user);
         }
         else{
             res.sendStatus(401);

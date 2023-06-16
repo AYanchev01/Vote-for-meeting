@@ -8,8 +8,7 @@ export interface User{
     id: string,
     email: string,
     password: string,
-    firstName: string,
-    lastName: string
+    name: string,
     /*votedFor: Vote[]
     invitedEvent: Event[],
     createdEvent: Event[],*/
@@ -43,9 +42,8 @@ export interface Vote{
 
 class AuthService{
 
-    async register({firstName, lastName, email, password}: User){
-        console.log("-----------------", {firstName, lastName, email, password});
-        const name: string = firstName + " " + lastName;
+    async register({name, email, password}: User){
+        console.log("-----------------",  {name, email, password});
         const pass = await bcrypt.hash(password, SALT_ROUNDS);
         const user = await prisma.user.create({
             data:{

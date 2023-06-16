@@ -4,11 +4,18 @@ const router = Router();
 
 router.post('/register', async (req, res) => {
     try {
-        const data: User = req.body;
-        console.log("--------------------", {data});
+        const {firstName, lastName, email, password} = req.body;
+        const name = firstName + " " + lastName;
+        const data: User= {
+            id: "",
+            email: email,
+            name:name,
+            password: password,
+            createdAt: new Date(),
+            updatedAt: new Date()
+    };
         const user = await authService.register(data);
         res.json(user);
-        res.sendStatus(200);
     }
     catch (error){
         console.error(error);
