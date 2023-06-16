@@ -20,9 +20,10 @@ export const Register: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const {firstName, lastName, email, pass, confirmPass } = formData;
+    const name: string = firstName + " " + lastName;
     const users: { [key: string]: { pass: string, name:string } } = JSON.parse(localStorage.getItem('users') || '{}');
 
     if(firstName.length < 1  || lastName.length < 1){
@@ -37,11 +38,34 @@ export const Register: React.FC = () => {
     } else if (users[email]) {
       alert('Email already registered');
     } else {
-      const name: string = firstName + " " + lastName;
-      users[email] = { pass, name };
-      localStorage.setItem('users', JSON.stringify(users));
-      alert('Registration successful!');
-      navigate("/");
+      try{
+        const response = await fetch('/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password: pass,
+        }),
+      });
+      if (response.ok) {
+        const name: string = firstName + " " + lastName;
+        users[email] = { pass, name };
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Registration successful!');
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred during registration');
+    }
+      
     }
   };
 

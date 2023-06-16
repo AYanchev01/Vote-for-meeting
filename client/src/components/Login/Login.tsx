@@ -7,17 +7,26 @@ export const Login: React.FC = () => {
   const [pass, setPass] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    let users: { [key: string]: { pass: string } } =
-      JSON.parse(localStorage.getItem("users") || "{}") || {};
-    let user = users[email];
-
-    if (!user || user.pass !== pass) {
-      alert("Invalid email or password");
-    } else {
+    try{
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password: pass }),
+    }); 
+    if (response.ok) {
       navigate("/dashboard");
+    } else {
+      const errorData = await response.json();
+      alert(errorData.message || "Login failed");
     }
+  } catch (error) {
+    console.error(error);
+    alert("An error occurred during login");
+  }
   };
 
   const handleFormSwitch = (event: React.MouseEvent<HTMLButtonElement>) => {
