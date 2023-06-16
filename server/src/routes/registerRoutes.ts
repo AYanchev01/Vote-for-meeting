@@ -5,9 +5,10 @@ const router = Router();
 router.post('/register', async (req, res) => {
     try {
         const data: User = req.body;
-        console.log("--------------------"+ data);
+        console.log("--------------------", {data});
         const user = await authService.register(data);
         res.json(user);
+        res.sendStatus(200);
     }
     catch (error){
         console.error(error);

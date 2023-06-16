@@ -6,9 +6,10 @@ router.post('/', async (req, res) => {
     try {
         const data: User = req.body;
         const user = await authService.login(data);
-        console.log("-----------------------" + user?.email);
+        console.log("-----------------------", user?.email);
         if(user){
-            res.json(user);
+            //res.json(user);
+            res.sendStatus(200);
         }
         else{
             res.sendStatus(401);

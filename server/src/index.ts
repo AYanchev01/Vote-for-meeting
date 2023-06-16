@@ -10,7 +10,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 
-//app.use(eventRoutes, loginRoutes, registerRoutes);
+app.use(eventRoutes)
+app.use('/',loginRoutes);
+app.use('/register', registerRoutes);
 
 app.use(express.static(path.join(__dirname, '../../client/build')));
 app.use(bodyParser.json());
