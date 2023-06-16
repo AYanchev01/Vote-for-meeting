@@ -15,7 +15,7 @@ const App: React.FC = () => {
         {/* Route for User Dashboard */}
         <Route path="/dashboard" element={<UserDashboard />} />
 
-        {/* Route for Organizer Preview */}
+        {/* Route for Event Page*/}
         <Route path="/events/:eventId" element={<EventPage/>} />
 
         {/* Route for Event Creation */}

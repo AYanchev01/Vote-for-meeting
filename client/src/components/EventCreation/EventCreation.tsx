@@ -48,7 +48,7 @@ const EventCreation: React.FC = () => {
     })
       .then(response => response.json())
       .then(newEvent => {
-        navigate(`/events/organizer/${newEvent.id}`);
+        navigate(`/events/${newEvent.id}`);
       })
       .catch(error => console.error('Error creating event:', error));
   };
