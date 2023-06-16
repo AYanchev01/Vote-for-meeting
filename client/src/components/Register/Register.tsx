@@ -28,8 +28,8 @@ export const Register: React.FC = () => {
     if(firstName.length < 1  || lastName.length < 1){
       alert('Invalid name');
     }
-    else if (!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(pass)) {
-      alert('Password must contain 6 to 16 characters, at least one digit and at least one letter!');
+    else if (!/^(?=.*\d)(?=.*[!@#$%^&*()\-=_+[\]{};':"\\|,.<>/?]).{6,16}$/.test(pass)) {
+      alert('Password must contain 6 to 16 characters, at least one digit and at least one symbol!');
     } else if (pass !== confirmPass) {
       alert("Passwords don't match!");
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -41,6 +41,7 @@ export const Register: React.FC = () => {
       users[email] = { pass, name };
       localStorage.setItem('users', JSON.stringify(users));
       alert('Registration successful!');
+      navigate("/");
     }
   };
 
