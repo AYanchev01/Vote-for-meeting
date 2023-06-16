@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UserDashboard from './components/UserDashboard/UserDashboard';
-import OrganizerPreview from './components/OrganizerPreview/OrganizerPreview';
+import EventPage from './components/EventPage/EventPage';
 import EventCreation from './components/EventCreation/EventCreation';
-import ParticipantPreview from './components/ParticipantPreview/ParticipantPreview';
 import Login from './components/Login/Login';
 
 const App: React.FC = () => {
@@ -17,10 +16,7 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={<UserDashboard />} />
 
         {/* Route for Organizer Preview */}
-        <Route path="/events/organizer/:eventId" element={<OrganizerPreview />} />
-
-        {/* Inside your Participant component */}
-        <Route path="/events/participant/:eventId" element={<ParticipantPreview />} />
+        <Route path="/events/:eventId" element={<EventPage/>} />
 
         {/* Route for Event Creation */}
         <Route path="/create-event" element={<EventCreation />} />
