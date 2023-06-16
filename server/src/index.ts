@@ -5,6 +5,16 @@ import eventRoutes from './routes/eventRoutes';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+async function main() {
+  
+}
+
+main()
+.then()
+.finally(async () =>{
+  await prisma.$disconnect();
+})
+
 app.use(express.json());
 app.use(cors());
 

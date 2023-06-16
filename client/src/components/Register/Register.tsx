@@ -4,6 +4,8 @@ import './Register.css';
 
 export const Register: React.FC = () => {
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     pass: '',
     confirmPass: ''
@@ -20,10 +22,13 @@ export const Register: React.FC = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { email, pass, confirmPass } = formData;
-    const users: { [key: string]: { pass: string } } = JSON.parse(localStorage.getItem('users') || '{}');
+    const {firstName, lastName, email, pass, confirmPass } = formData;
+    const users: { [key: string]: { pass: string, name:string } } = JSON.parse(localStorage.getItem('users') || '{}');
 
-    if (!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(pass)) {
+    if(firstName.length < 1  || lastName.length < 1){
+      alert('Invalid name');
+    }
+    else if (!/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(pass)) {
       alert('Password must contain 6 to 16 characters, at least one digit and at least one letter!');
     } else if (pass !== confirmPass) {
       alert("Passwords don't match!");
@@ -32,60 +37,84 @@ export const Register: React.FC = () => {
     } else if (users[email]) {
       alert('Email already registered');
     } else {
-      users[email] = { pass };
+      const name: string = firstName + " " + lastName;
+      users[email] = { pass, name };
       localStorage.setItem('users', JSON.stringify(users));
       alert('Registration successful!');
     }
   };
 
-  const handleFormSwitch = () => {
+  const handleFormSwitch = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     navigate("/");
   };
 
   return (
-    <form className="register-form" onSubmit={handleSubmit}>
-      <label className="form-header">Register</label>
-      <div className="box">
-        <label htmlFor="email">Email</label>
-        <input
-          value={formData.email}
-          onChange={handleChange}
-          type="email"
-          placeholder="yourEmail@mail.com"
-          id="email"
-          name="email"
-          className="input-field"
-        />
+    <div className="register-form-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        <label className="register-form-header">Register</label>
+        <div className="register-box">
+          <label className="label-name" htmlFor="first-name">First name</label>
+          <input
+            value={formData.firstName}
+            onChange={handleChange}
+            type="text"
+            placeholder="First name"
+            id="first-name"
+            name="firstName"
+            className="register-input"
+          />
+          <label className="label-name" htmlFor="last-name">Last name</label>
+          <input
+            value={formData.lastName}
+            onChange={handleChange}
+            type="text"
+            placeholder="Last name"
+            id="last-name"
+            name="lastName"
+            className="register-input"
+          />
+          <label className="label-email" htmlFor="email">Email</label>
+          <input
+            value={formData.email}
+            onChange={handleChange}
+            type="email"
+            placeholder="yourEmail@mail.com"
+            id="email"
+            name="email"
+            className="register-input"
+          />
 
-        <label htmlFor="password">Password</label>
-        <input
-          value={formData.pass}
-          onChange={handleChange}
-          type="password"
-          placeholder="********"
-          id="password"
-          name="pass"
-          className="input-field"
-        />
+          <label className="label-password" htmlFor="password">Password</label>
+          <input
+            value={formData.pass}
+            onChange={handleChange}
+            type="password"
+            placeholder="********"
+            id="password"
+            name="pass"
+            className="register-input"
+          />
 
-        <label htmlFor="confirmPassword">Confirm password</label>
-        <input
-          value={formData.confirmPass}
-          onChange={handleChange}
-          type="password"
-          placeholder="********"
-          id="confirmPassword"
-          name="confirmPass"
-          className="input-field"
-        />
+          <label className="label-password" htmlFor="confirmPassword">Confirm password</label>
+          <input
+            value={formData.confirmPass}
+            onChange={handleChange}
+            type="password"
+            placeholder="********"
+            id="confirmPassword"
+            name="confirmPass"
+            className= "register-input"
+          />
+        </div>
+
+        <button type="submit" className="submit">
+          Register!
+        </button>
+        <button className="link-btn" onClick={handleFormSwitch}>
+          Already have an account? Log in
+        </button>
+      </form>
       </div>
-
-      <button type="submit" className="submit">
-        Register!
-      </button>
-      <button className="link-btn" onClick={handleFormSwitch}>
-        Already have an account? Log in
-      </button>
-    </form>
   );
 };

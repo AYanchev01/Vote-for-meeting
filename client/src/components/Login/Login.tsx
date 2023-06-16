@@ -9,9 +9,9 @@ export const Login: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    var users: { [key: string]: { pass: string } } =
+    let users: { [key: string]: { pass: string } } =
       JSON.parse(localStorage.getItem("users") || "{}") || {};
-    var user = users[email];
+    let user = users[email];
 
     if (!user || user.pass !== pass) {
       alert("Invalid email or password");
@@ -20,44 +20,47 @@ export const Login: React.FC = () => {
     }
   };
 
-  const handleFormSwitch = () => {
+  const handleFormSwitch = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     navigate("/register");
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
-      <label className="form-header">Sign in</label>
-      <div className="box">
-        <label htmlFor="email">Email</label>
-        <input
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          type="email"
-          placeholder="yourEmail@mail.com"
-          id="email"
-          name="email"
-        />
+    <div className="login-form-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <label className="login-form-header">Sign in</label>
+        <div className="login-box">
+          <label className="label-email" htmlFor="email">Email</label>
+          <input className="login-input"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            type="email"
+            placeholder="yourEmail@mail.com"
+            id="email"
+            name="email"
+          />
 
-        <label htmlFor="password">Password</label>
-        <input
-          value={pass}
-          onChange={(event) => setPass(event.target.value)}
-          type="password"
-          placeholder="********"
-          id="password"
-          name="password"
-        />
-      </div>
-      <button className="submit" type="submit">
-        Log in!
-      </button>
-      <button
-        className="link-btn"
-        onClick={handleFormSwitch}
-      >
-        Don't have an account? Register
-      </button>
-    </form>
+          <label className="label-password" htmlFor="password">Password</label>
+          <input className="login-input"
+            value={pass}
+            onChange={(event) => setPass(event.target.value)}
+            type="password"
+            placeholder="********"
+            id="password"
+            name="password"
+          />
+        </div>
+        <button className="submit" type="submit">
+          Log in!
+        </button>
+        <button
+          className="link-btn"
+          onClick={handleFormSwitch}
+        >
+          Don't have an account? Register
+        </button>
+      </form>
+    </div>
   );
 };
 
