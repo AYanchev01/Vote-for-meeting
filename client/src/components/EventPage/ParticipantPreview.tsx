@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './ParticipantPreview.css'
+import VotingResult from './VotingResult';
 
 const ParticipantPreview: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -24,23 +25,15 @@ const ParticipantPreview: React.FC = () => {
 
   return (
     <div>
-      {/* <h1>Participant Preview</h1> */}
-      <p>Name: {event.name}</p>
-      <p>Created By: {event.createdBy.name}</p>
-      {/* <p>Created At: {new Date(event.createdAt).toLocaleDateString()}</p> */}
-      <p>Duration: {event.duration}</p>
-
-      {/* then if check for voted or not and based on that we generate what we need for the bottom part of the page? or two separate pages with 
-      two separate URLs,                     i think its better to do it in the dashboard when we choose where to go to */}
-
+        <p>Response submitted!</p>
+        <VotingResult voteData={event.voteData} availableTimes={event.availableTimes} />     
+        
       {/* <div>
       {user.votedFor.length === 0 ? (
         <VotingPage eventId={eventId} />
       ) : (
         <PreviewPage eventId={eventId} />
       )} */}
-
-
     </div>
   );
 };
