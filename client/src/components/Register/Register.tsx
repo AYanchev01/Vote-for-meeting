@@ -39,22 +39,19 @@ export const Register: React.FC = () => {
       alert('Email already registered');
     } else {
       try{
-        const response = await fetch('/register', {
+        const response = await fetch('http://localhost:3001/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            firstName,
-            lastName,
+            name,
             email,
             password: pass,
         }),
       });
       if (response.ok) {
-        const name: string = firstName + " " + lastName;
         users[email] = { pass, name };
-        localStorage.setItem('users', JSON.stringify(users));
         alert('Registration successful!');
         navigate("/");
       } else {
@@ -62,7 +59,8 @@ export const Register: React.FC = () => {
         alert(errorData.message || 'Registration failed');
       }
     } catch (error) {
-      console.error(error);
+      //console.error(error);
+      console.log("-------------------------------",{pass, name});
       alert('An error occurred during registration');
     }
       
