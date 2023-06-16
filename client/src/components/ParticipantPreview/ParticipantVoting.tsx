@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './ParticipantPreview.css'
+import './ParticipantVoting.css'
 
 const ParticipantPreview: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();

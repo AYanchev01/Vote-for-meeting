@@ -15,12 +15,15 @@
     "@prisma/client": "^4.15.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
+    "@types/react-copy-to-clipboard": "^5.0.4",
+    "clipboard-copy": "^4.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.2.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "prisma": "^4.15.0",
     "prisma-client": "^0.0.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {

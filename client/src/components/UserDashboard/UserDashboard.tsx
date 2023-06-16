@@ -104,8 +104,8 @@ const UserDashboard: React.FC = () => {
           <button className="logout-btn" onClick={handleLogout}>Logout</button> {/* Add logout button */}
         </div>
       </div>
-
-      {/* Events List */}
+      <button onClick={handleEventClick}> Preview</button>
+      {/* Events List
       <div className="events-list">
         <div className="events-list-header">
           <h1>Your events</h1>
@@ -136,7 +136,7 @@ const UserDashboard: React.FC = () => {
             )}
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
