@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import EventInformation from './EventInformation';
 import OrganizerPreview from './OrganizerPreview';
 import ParticipantPreview from './ParticipantPreview';
-//import NotLoggedInMessage from './NotLoggedInMessage';
 import ParticipantVoting from './ParticipantVoting';
 
 const EventPage: React.FC<{ match: any }> = ({ match }) => {
@@ -28,6 +27,7 @@ const EventPage: React.FC<{ match: any }> = ({ match }) => {
 
   const { name, createdBy, duration, selectedTimes } = eventData;
 
+  //or switch - think
   return (
     <div>
       <h1>Event Page</h1>
@@ -48,39 +48,3 @@ const EventPage: React.FC<{ match: any }> = ({ match }) => {
 };
 
 export default EventPage;
-
-// import React, { useEffect, useState } from 'react';
-// import OrganizerPreview from './OrganizerPreview';
-// import ParticipantPreview from './ParticipantPreview';
-// import NotLoggedInMessage from './NotLoggedInMessage';
-
-// const EventPage = ({ match }) => {
-//     const [eventData, setEventData] = useState(null);
-//     const [userRole, setUserRole] = useState(null);
-
-//     useEffect(() => {
-//         const eventId = match.params.eventId;
-//         // Fetch event data from the server
-//         fetch(`/api/events/${eventId}`)
-//             .then(res => res.json())
-//             .then(data => {
-//                 setEventData(data.event);
-//                 setUserRole(data.userRole);
-//             });
-//     }, [match.params.eventId]);
-
-//     if (!eventData) {
-//         return <div>Loading...</div>;
-//     }
-
-//     switch (userRole) {
-//         case 'organizer':
-//             return <OrganizerPreview event={eventData} />;
-//         case 'participant':
-//             return <ParticipantPreview event={eventData} />;
-//         default:
-//             return <NotLoggedInMessage />;
-//     }
-// };
-
-// export default EventPage;

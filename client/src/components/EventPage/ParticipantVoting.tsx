@@ -9,7 +9,7 @@ const ParticipantVoting: React.FC = () => {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/eventId')
+    fetch(`http://localhost:3001/api/events/${eventId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -35,7 +35,7 @@ const ParticipantVoting: React.FC = () => {
   }, [eventId]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/user') //we shoul get it again from /events/${eventId}
+    fetch(`http://localhost:3001/api/events/${eventId}`) //can i combine all fetches
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -61,8 +61,8 @@ const ParticipantVoting: React.FC = () => {
     const vote = {
       votedBy: user?.id,
       userId: user?.id,
-      votedTo: event?.id,
-      eventId: event?.id,
+      votedTo: event?.id,                      //rework
+      eventId: event?.id,                      //rework
       selectedTimes: selectedTimes,
     };
 
