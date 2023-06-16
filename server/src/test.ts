@@ -31,7 +31,7 @@ async function seed() {
       name: 'Mock Event',
       userId: undefined,        //what
       duration: '2 hours',
-      avaliableTimes: ['2023-06-16T10:00:00Z', '2023-06-17T14:00:00Z', '2023-06-18T16:00:00Z'],
+      availableTimes: ['2023-06-16T10:00:00Z', '2023-06-17T14:00:00Z', '2023-06-18T16:00:00Z'],
       createdBy: {
         connect: {
           id: user1.id,
