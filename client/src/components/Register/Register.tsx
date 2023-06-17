@@ -24,9 +24,6 @@ export const Register: React.FC = () => {
     event.preventDefault();
     const {firstName, lastName, email, pass, confirmPass } = formData;
 
-    // if(firstName.length < 1  || lastName.length < 1){
-    //   alert('Invalid name');
-    // } else
      if (!/^(?=.*\d)(?=.*[!@#$%^&*()\-=_+[\]{};':"\\|,.<>/?]).{6,16}$/.test(pass)) {
       alert('Password must contain 6 to 16 characters, at least one digit and at least one symbol!');
     } else if (pass !== confirmPass) {
@@ -62,7 +59,7 @@ export const Register: React.FC = () => {
     }
   } catch (error) {
         console.error(error);
-        alert('Hello');
+        alert('Error occured with the registration');
       }
     }
   };

@@ -11,12 +11,7 @@ router.post('/register', async (req, res) => {
             return res.sendStatus(409);
         }
         const user = await authService.register(firstName, lastName, email, password);
-        const accessToken = jwt.sign(
-            { userID: user.id},
-            process.env.ACCESS_TOKEN_SECRET as string,
-            { expiresIn: 86400 }
-        );
-        res.json(accessToken);
+        res.json(user);
     }
     catch (error){
         console.error(error);

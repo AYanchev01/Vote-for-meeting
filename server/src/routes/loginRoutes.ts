@@ -14,7 +14,8 @@ router.post('/', async (req, res) => {
                 process.env.ACCESS_TOKEN_SECRET as string,
                 { expiresIn: 86400 }
             );
-            res.json(accessToken);
+            console.log()
+            res.json({ accessToken: accessToken });
         }
         else{
             res.sendStatus(401);
