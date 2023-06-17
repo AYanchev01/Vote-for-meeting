@@ -9,8 +9,22 @@
   width: 470px;
   border-radius: 4px;
   font-size: 18px;
-  font-family: fantasy;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.event-name-input:focus {
+  border-color: #6EC071;
+  box-shadow: 0 2px 8px rgba(110, 192, 113, 0.3);
+  outline: none;
+}
+
+.event-name-input::placeholder {
+  color: #999;
+}
+
 
 .navbar {
   display: flex;
@@ -29,7 +43,6 @@
     color: red;
     font-size: 18px;
     margin-top: 10px;
-    font-family: fantasy;
     display: flex;
     justify-content: center;
     align-items: center;
