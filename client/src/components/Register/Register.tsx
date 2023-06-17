@@ -23,20 +23,16 @@ export const Register: React.FC = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const {firstName, lastName, email, pass, confirmPass } = formData;
-    const name: string = firstName + " " + lastName;
-    const users: { [key: string]: { pass: string, name:string } } = JSON.parse(localStorage.getItem('users') || '{}');
 
-    if(firstName.length < 1  || lastName.length < 1){
-      alert('Invalid name');
-    }
-    else if (!/^(?=.*\d)(?=.*[!@#$%^&*()\-=_+[\]{};':"\\|,.<>/?]).{6,16}$/.test(pass)) {
+    // if(firstName.length < 1  || lastName.length < 1){
+    //   alert('Invalid name');
+    // } else
+     if (!/^(?=.*\d)(?=.*[!@#$%^&*()\-=_+[\]{};':"\\|,.<>/?]).{6,16}$/.test(pass)) {
       alert('Password must contain 6 to 16 characters, at least one digit and at least one symbol!');
     } else if (pass !== confirmPass) {
       alert("Passwords don't match!");
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       alert('Invalid email!');
-    } else if (users[email]) {
-      alert('Email already registered');
     } else {
       try{
         const response = await fetch('http://localhost:3001/register', {
@@ -45,25 +41,23 @@ export const Register: React.FC = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name,
+            firstName,
+            lastName,
             email,
             password: pass,
         }),
       });
-      if (response.ok) {
-        users[email] = { pass, name };
-        alert('Registration successful!');
-        navigate("/");
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message || 'Registration failed');
-      }
-    } catch (error) {
-      //console.error(error);
-      console.log("-------------------------------",{pass, name});
+        if (response.ok) {
+          alert('Registration successful!');
+          navigate("/");
+        } else {
+          const errorData = await response.json();
+          alert(errorData.message || 'Registration failed');
+        }
+      } catch (error) {
+      console.error(error);
       alert('An error occurred during registration');
-    }
-      
+      }
     }
   };
 
@@ -86,6 +80,7 @@ export const Register: React.FC = () => {
             id="first-name"
             name="firstName"
             className="register-input"
+            required
           />
           <label className="label-name" htmlFor="last-name">Last name</label>
           <input
@@ -96,6 +91,7 @@ export const Register: React.FC = () => {
             id="last-name"
             name="lastName"
             className="register-input"
+            required
           />
           <label className="label-email" htmlFor="email">Email</label>
           <input
@@ -106,6 +102,7 @@ export const Register: React.FC = () => {
             id="email"
             name="email"
             className="register-input"
+            required
           />
 
           <label className="label-password" htmlFor="password">Password</label>
@@ -117,6 +114,7 @@ export const Register: React.FC = () => {
             id="password"
             name="pass"
             className="register-input"
+            required
           />
 
           <label className="label-password" htmlFor="confirmPassword">Confirm password</label>
@@ -128,6 +126,7 @@ export const Register: React.FC = () => {
             id="confirmPassword"
             name="confirmPass"
             className= "register-input"
+            required
           />
         </div>
 

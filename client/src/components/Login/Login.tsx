@@ -9,8 +9,7 @@ export const Login: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    
-    console.log("-------------------", {email});
+
     try{
       const response = await fetch('http://localhost:3001/', {
         method: 'POST',
@@ -27,8 +26,7 @@ export const Login: React.FC = () => {
     }
   } catch (error) {
     console.error(error);
-    console.log("-------------------", {email});
-    alert("An error occurred during login");
+    alert("Invalid username or password.");
   }
   };
 

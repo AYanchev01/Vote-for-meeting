@@ -1,12 +1,11 @@
 import { Router, response } from 'express';
-import authService, { User } from '../services/Auth-service';
+import authService from '../services/authService';
 const router = Router();
 
 router.post('/', async (req, res) => {
     try {
-        const data: User = req.body;
-        const user = await authService.login(data);
-        console.log("-----------------------", user?.email);
+        const {email, password} = req.body;
+        const user = await authService.login(email, password);
         if(user){
             res.json(user);
         }

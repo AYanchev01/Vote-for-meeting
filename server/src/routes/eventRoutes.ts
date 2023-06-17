@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 const router = Router();
-/*
+
 router.get('/api/events/:eventId', async (req, res) => {
     try {
         const eventId = req.params.eventId;
@@ -113,5 +113,5 @@ router.get('/api/user/events', async (req, res) => {
   }
 });
 
-*/
+
 export default router;
