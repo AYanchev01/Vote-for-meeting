@@ -74,13 +74,25 @@ const handleCreateEvent = () => {
         availableTimes,
     };
 
+
+    const token = localStorage.getItem('accessToken');
+
+    const headers = new Headers();
+    headers.append('x-auth-token', token || '');
+    headers.append('Content-Type', 'application/json');
+
     // POST request to create a new event
     fetch('http://localhost:3001/api/events', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers,
       body: JSON.stringify(event),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 401) {
+          return;
+        }
+        return response.json();
+      })
       .then((newEvent) => {
         navigate(`/events/${newEvent.id}`);
       })

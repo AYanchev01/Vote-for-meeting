@@ -1,14 +1,15 @@
 import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import authToken from '../middleware/authToken';
+import { AuthenticatedRequest } from '../interfaces/AuthenticationRequest';
 
 const prisma = new PrismaClient();
 const router = Router();
 
-router.get('/api/events/:eventId', async (req, res) => {
+router.get('/api/events/:eventId',authToken, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const eventId = req.params.eventId;
-        // const userId = req.user.id;
-        const userId = "some uuid"; 
+        const userId = req.userID;
 
         const event = await prisma.event.findUnique({
             where: { id: eventId },
@@ -47,11 +48,15 @@ router.get('/api/events/:eventId', async (req, res) => {
     }
 });
 
-router.post('/api/events', async (req: Request, res: Response) => {
+router.post('/api/events', authToken, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const { name, duration, availableTimes } = req.body;
 
-        const userId = "ea29de47-4820-4e08-aa72-8ad9bb15d76a";
+        const userId = req.userID;
+
+        if (!userId) {
+          return res.status(400).json({ error: 'userId is required' });
+        }
 
         const data = {
           name,
@@ -74,10 +79,10 @@ router.post('/api/events', async (req: Request, res: Response) => {
     }
 });
 
-router.get('/api/user/events', async (req, res) => {
+router.get('/api/user/events',authToken, async (req: AuthenticatedRequest, res) => {
   try {
     // const userId = req.user.id;
-    const userId = "ea29de47-4820-4e08-aa72-8ad9bb15d76a";
+    const userId = req.userID;
 
     const events = await prisma.event.findMany({
       where: {
