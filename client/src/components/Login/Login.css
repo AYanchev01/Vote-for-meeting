@@ -16,9 +16,9 @@
   justify-content: center;
   align-items: center;
   width: 450px;
-  margin: 2% auto;
+  margin: 5% auto;
   box-shadow: 0 9px 50px hsla(214, 17%, 8%, 0.784);
-  padding: 2%;
+  padding: 1.5%;
   background-color: #354152;
 }
 
@@ -91,4 +91,12 @@ button:hover {
   100% {
       transform: translateY(5px);
   }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
 }

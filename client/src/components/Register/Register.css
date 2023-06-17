@@ -7,6 +7,7 @@
   justify-content: center;
   display: flex;
   background-size: cover;
+  height: 95vh;
 }
 
 .register-form {
@@ -93,4 +94,12 @@ button:hover {
   100% {
       transform: translateY(5px);
   }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
 }
