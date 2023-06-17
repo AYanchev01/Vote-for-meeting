@@ -31,8 +31,7 @@ const UserDashboard: React.FC = () => {
   };
 
   const handleEventClick = (eventId: string) => {
-    // Navigate to the EventPage component with the event ID
-    navigate(`/events/participate/${eventId}`);
+    navigate(`/events/${eventId}`);
   };
 
   return (
@@ -45,11 +44,14 @@ const UserDashboard: React.FC = () => {
 
       {/* Events List */}
       <div className="events-list">
+        <h1>Your events</h1>
         {events.map((event) => (
           <div key={event.id} className="event-item" onClick={() => handleEventClick(event.id)}>
             <div className="event-name">{event.name}</div>
-            <div className="event-duration">{event.duration}</div>
-            <div className="event-creator">{event.createdBy.name}</div>
+            <div className="event-duration">
+              Duration: <span className="event-duration-value">{event.duration}</span>
+            </div>
+            <div className="event-creator">Organizer: {event.createdBy.name}</div>
           </div>
         ))}
       </div>

@@ -87,10 +87,15 @@ const handleCreateEvent = () => {
       .catch((error) => console.error('Error creating event:', error));
   };
 
+  const handleDashboard = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <div>
       <div className="navbar">
         <span className="website-name">Doodle</span>
+        <button className="create-event-btn" onClick={handleDashboard}>Dashboard</button>
       </div>
       <h1>Create a group poll</h1>
       <h2>Title</h2>
@@ -101,9 +106,11 @@ const handleCreateEvent = () => {
         onChange={handleEventNameChange}
         placeholder="What's the occasion ?"
       />
+      <h2>Duration:</h2>
       <EventDuration
         onDisplayDurationChange={(displayDuration) => setDisplayDuration(displayDuration)}
       />
+      <h2>Dates</h2>
       <Calendar
         selectedDates={selectedDates}
         setSelectedDates={setSelectedDates}

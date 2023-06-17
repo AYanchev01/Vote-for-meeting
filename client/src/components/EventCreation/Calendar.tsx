@@ -181,7 +181,6 @@ const Calendar: React.FC<CalendarProps> = ({
 
     return (
         <div>
-            <h2>Dates</h2>
             <div className="calendar">{renderCalendar()}</div>
             <h2>Times for selected dates:</h2>
             <ul>
