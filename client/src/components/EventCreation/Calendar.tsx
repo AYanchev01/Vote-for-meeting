@@ -26,6 +26,8 @@ const Calendar: React.FC<CalendarProps> = ({
 }) => {
 
     const currentDate = new Date();
+    currentDate.setHours(0,0,0,0);
+
     const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
     const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
 
