@@ -28,6 +28,7 @@ class AuthService{
                 email
             },
             select:{
+                id: true,
                 name: true,
                 email: true
             }

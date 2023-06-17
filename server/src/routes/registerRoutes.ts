@@ -1,6 +1,6 @@
 import { Router, response } from 'express';
 import authService from '../services/authService';
-import { error } from 'console';
+import jwt from 'jsonwebtoken';
 const router = Router();
 
 router.post('/register', async (req, res) => {
@@ -11,7 +11,12 @@ router.post('/register', async (req, res) => {
             return res.sendStatus(409);
         }
         const user = await authService.register(firstName, lastName, email, password);
-        res.json(user);
+        const accessToken = jwt.sign(
+            { userID: user.id},
+            process.env.ACCESS_TOKEN_SECRET as string,
+            { expiresIn: 86400 }
+        );
+        res.json(accessToken);
     }
     catch (error){
         console.error(error);
