@@ -67,6 +67,10 @@ export const Register: React.FC = () => {
   };
 
   return (
+  <div className="page-container">
+    <div className="navbar">
+      <span className="website-name">Doodle</span>
+    </div>
     <div className="register-form-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <label className="register-form-header">Register</label>
@@ -138,5 +142,6 @@ export const Register: React.FC = () => {
         </button>
       </form>
       </div>
+    </div>
   );
 };
