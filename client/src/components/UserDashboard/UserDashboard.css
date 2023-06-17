@@ -58,11 +58,13 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid transparent;
 }
 
 .event-item:hover {
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  border-color: #F9AA33;
 }
 
 .event-name {
@@ -85,4 +87,70 @@ body {
 .event-creator {
   font-size: 1em;
   color: #555;
+}
+
+/* Events List */
+.events-list {
+  padding: 20px;
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.events-list-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.events-list-header:after {
+  content: '';
+  background-color: #4caf50;
+  height: 3px;
+  width: calc(100% - 20px); 
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.events-list h1 {
+  color: #344955;
+  font-size: 2em;
+  margin-right: 50px;
+}
+
+/* Style for the wrapper around the input */
+.search-wrapper {
+  position: relative;
+  display: inline-block;
+  flex-grow: 1;
+}
+
+
+.search-input {
+  padding: 8px;
+  padding-right: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 20px;
+}
+
+.search-input:focus {
+  border-color: #6EC071;
+  box-shadow: 0 2px 8px rgba(110, 192, 113, 0.3);
+  outline: none;
+}
+
+.search-wrapper::after {
+  content: "🔍";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
 }

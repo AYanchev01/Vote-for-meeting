@@ -59,7 +59,7 @@ h1 {
   position: relative;
 }
 
-h1:after {
+/* h1:after {
   content: '';
   background-color: #4caf50;
   height: 3px;
@@ -68,7 +68,7 @@ h1:after {
   bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-}
+} */
 
 h2 {
   color: #34495E;
