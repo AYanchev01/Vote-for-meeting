@@ -51,15 +51,7 @@ router.post('/api/events', async (req: Request, res: Response) => {
     try {
         const { name, duration, availableTimes } = req.body;
 
-        const newUser = await prisma.user.create({
-          data: {
-            email: "Some email",
-            password: "pass",
-            name: "naem",
-          }
-        });
-
-        const userId = newUser.id;
+        const userId = "ea29de47-4820-4e08-aa72-8ad9bb15d76a";
 
         const data = {
           name,
@@ -85,7 +77,7 @@ router.post('/api/events', async (req: Request, res: Response) => {
 router.get('/api/user/events', async (req, res) => {
   try {
     // const userId = req.user.id;
-    const userId = "mock user Id";
+    const userId = "ea29de47-4820-4e08-aa72-8ad9bb15d76a";
 
     const events = await prisma.event.findMany({
       where: {

@@ -25,7 +25,12 @@ const EventDuration: React.FC<DurationProps> = ({ onDisplayDurationChange }) => 
   };
 
   const handleCustomDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const minutes = parseInt(event.target.value);
+    let minutes = parseInt(event.target.value, 10);
+
+    if (minutes < 0) {
+      minutes = 0;
+    }
+
     setCustomDuration(minutes);
     if (selectedDuration === 'custom') {
       onDisplayDurationChange(`${minutes} minutes`);
@@ -34,7 +39,6 @@ const EventDuration: React.FC<DurationProps> = ({ onDisplayDurationChange }) => 
 
   return (
     <div>
-      <h2>Duration:</h2>
       <div className="event-duration-options">
         <button
           className={`duration-option ${selectedDuration === 15 ? 'selected' : ''}`}
@@ -73,6 +77,8 @@ const EventDuration: React.FC<DurationProps> = ({ onDisplayDurationChange }) => 
               value={customDuration}
               onChange={handleCustomDurationChange}
               placeholder="Enter custom duration"
+              className="custom-duration-input"
+              min="0"
             />
             <span>minutes</span>
           </>
