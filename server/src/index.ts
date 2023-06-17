@@ -3,8 +3,6 @@ import cors from 'cors';
 import eventRoutes from './routes/eventRoutes';
 import loginRoutes from './routes/loginRoutes';
 import registerRoutes from './routes/registerRoutes';
-import path from 'path'
-import bodyParser from 'body-parser';
 
 const app = express();
 const PORT = process.env.PORT || 3001;

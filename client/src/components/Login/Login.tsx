@@ -19,6 +19,10 @@ export const Login: React.FC = () => {
         body: JSON.stringify({ email, password: pass }),
       });
       if (response.ok) {
+        const data = await response.json();
+
+        const accessToken = data.accessToken;
+        localStorage.setItem('accessToken', accessToken);
         navigate("/dashboard");
       } else {
         const errorData = await response.json();

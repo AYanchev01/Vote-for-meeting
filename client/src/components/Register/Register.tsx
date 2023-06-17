@@ -24,9 +24,6 @@ export const Register: React.FC = () => {
     event.preventDefault();
     const {firstName, lastName, email, pass, confirmPass } = formData;
 
-    // if(firstName.length < 1  || lastName.length < 1){
-    //   alert('Invalid name');
-    // } else
      if (!/^(?=.*\d)(?=.*[!@#$%^&*()\-=_+[\]{};':"\\|,.<>/?]).{6,16}$/.test(pass)) {
       alert('Password must contain 6 to 16 characters, at least one digit and at least one symbol!');
     } else if (pass !== confirmPass) {
@@ -47,16 +44,22 @@ export const Register: React.FC = () => {
             password: pass,
         }),
       });
-        if (response.ok) {
+      if (response.ok) {
+        alert('Registration successful!');
+        navigate("/");
+      } else {
+        if(response.ok) {
           alert('Registration successful!');
           navigate("/");
+        } else if (response.status === 409) {
+          alert('Email is already registered');
         } else {
-          const errorData = await response.json();
-          alert(errorData.message || 'Registration failed');
+          alert('Registration failed');
         }
-      } catch (error) {
-      console.error(error);
-      alert('An error occurred during registration');
+    }
+  } catch (error) {
+        console.error(error);
+        alert('Error occured with the registration');
       }
     }
   };
