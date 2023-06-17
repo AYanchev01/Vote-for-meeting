@@ -17,9 +17,21 @@ const UserDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch events from server 
-    fetch('http://localhost:3001/api/user/events')
-      .then((response) => response.json())
+    // Fetch events from server
+    const token = localStorage.getItem('accessToken');
+
+    const headers = new Headers();
+    headers.append('x-auth-token', token || '');
+
+    fetch('http://localhost:3001/api/user/events', {
+      headers: headers,
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          return;
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log('Data fetched: ', data);
         setEvents(data);

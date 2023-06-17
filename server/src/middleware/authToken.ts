@@ -1,12 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { AuthenticatedRequest } from '../interfaces/AuthenticationRequest';
 
 dotenv.config();
-
-interface AuthenticatedRequest extends Request {
-    userID?: string;
-};
 
 const authToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const token = req.header('x-auth-token');
