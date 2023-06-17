@@ -1,0 +1,20 @@
+
+.event-info{
+    text-align: center;
+    
+    font-size: 20px;
+    background: #eafceb;
+    overflow: hidden;
+    max-width: 345px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #414140; 
+    color:#34495E;
+}
+
+.icon {
+    padding: 10px;
+    min-width: 40px;
+
+}

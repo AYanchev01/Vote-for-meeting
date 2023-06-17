@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';                //to fix error
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import VotingResult from './VotingResult';
 
-const OrganizerPreview: React.FC = () => {
+type EventData = {
+  id: string;          //types?
+  name: string;          //types?
+};
+
+type OrganizerPreviewProps = {
+  event: EventData;
+};
+const OrganizerPreview: React.FC<OrganizerPreviewProps> = () => {
   const [event, setEvent] = useState<any>(null);
+  const { eventId } = useParams<{ eventId: string }>();
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {

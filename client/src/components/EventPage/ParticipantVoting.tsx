@@ -4,9 +4,9 @@ import './ParticipantVoting.css';
 
 const ParticipantVoting: React.FC = () => {
   const [eventId, setEventId] = useState<string>('');
-  const [event, setEvent] = useState<any>(null);
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
-  const [user, setUser] = useState<any>(null);
+  const [event, setEvent] = useState<any>(null);                         //useState<Event[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);           //does it have to be this
+  const [user, setUser] = useState<any>(null);                              //useState<User[]>([]);
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/events/${eventId}`)
@@ -59,16 +59,16 @@ const ParticipantVoting: React.FC = () => {
 
     // Create a vote object
     const vote = {
-      votedBy: user?.id,
-      userId: user?.id,
-      votedTo: event?.id,                      //rework
-      eventId: event?.id,                      //rework
-      selectedTimes: selectedTimes,
+      votedBy: user?.name,   //or id
+      userId: user?.id,      //how to get info
+      votedTo: eventId,                      //rework
+      eventId: eventId,                      //rework
+      selectedTimes: selectedTimes,         //???
     };
 
     // POST request to submit the vote
-    fetch('http://localhost:3001/api/votes', {
-      //we shoul post it back to /events/${eventId}
+    fetch('http://localhost:3001/events/${eventId}', {
+      //we should post it back to /events/${eventId}
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(vote),
@@ -108,7 +108,6 @@ const ParticipantVoting: React.FC = () => {
             </label>
           </div>
         ))}
-        <input type="text" value={user.name} readOnly placeholder="Your Name" />
         <button type="submit">Submit Vote</button>
       </form>
     </div>

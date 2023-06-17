@@ -1,48 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import EventInformation from './EventInformation';
-import OrganizerPreview from './OrganizerPreview';
-import ParticipantPreview from './ParticipantPreview';
-import ParticipantVoting from './ParticipantVoting';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import OrganizerPreview from "./OrganizerPreview";
+import ParticipantPreview from "./ParticipantPreview";
+import ParticipantVoting from "./ParticipantVoting";
+import EventInformation from "./EventInformation"; // Import the EventInformation component
 
-const EventPage: React.FC<{ match: any }> = ({ match }) => {
+const EventPage = () => {
+  const { eventId } = useParams();
   const [eventData, setEventData] = useState<any>(null);
-  const [userRole, setUserRole] = useState<string | null>(null);
-
-//if not logged go to login
+  const [previewType, setPreviewType] = useState<string>('');
 
   useEffect(() => {
-    const eventId = match.params.eventId;
-    // Fetch event data from the server
-    fetch(`http://localhost:3001/api/events/${eventId}`)                   
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchEventData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/events/${eventId}`);
+        const data = await response.json();
         setEventData(data.event);
-        setUserRole(data.userRole);
-      });
-  }, [match.params.eventId]);
+        setPreviewType(data.previewType);
+      } catch (error) {
+        console.error("Error fetching event data:", error);
+      }
+    };
+    fetchEventData();
+  }, [eventId]);
 
   if (!eventData) {
     return <div>Loading...</div>;
   }
 
-  const { name, createdBy, duration, selectedTimes } = eventData;
-
-  //or switch - think
   return (
     <div>
-      <h1>Event Page</h1>
-      <EventInformation name={name} creator={createdBy.name} duration={duration} />
-      {/* {userRole === 'organizer' ? (
-        <OrganizerPreview event={eventData} />
-      ) : userRole === 'participant' ? (
-        selectedTimes && selectedTimes.length > 0 ? (
-          <ParticipantVoting event={eventData} />
-        ) : (
-          <ParticipantPreview event={eventData} />
-        )
-      ) : (
-        <NotLoggedInMessage />
-      )} */}
+      <div className="navbar">
+        <span className="website-name">Doodle</span>
+      </div>
+      <EventInformation
+        name={eventData.name}
+        creator={eventData.createdBy.name}
+        duration={eventData.duration}
+      />
+      {previewType === "organizer" && <OrganizerPreview event={eventData} />}
+      {/* {previewType === "participant" && <ParticipantPreview event={eventData} />}
+      {previewType === "voting" && <ParticipantVoting event={eventData} />} */}
+      {previewType !== "organizer" && previewType !== "participant" && previewType !== "voting" && (
+        <div>Something went wrong</div>
+      )}
     </div>
   );
 };
