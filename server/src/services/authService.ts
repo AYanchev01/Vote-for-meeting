@@ -18,10 +18,7 @@ class AuthService{
       }
 
     async register(firstName:string, lastName:string, email:string, password:string){
-        const existingUser = await this.findUserByEmail(email);
-        if (existingUser) {
-            return alert('Email is already registered');
-        }
+        
         const name = `${firstName} ${lastName}`;
         const pass = await bcrypt.hash(password, SALT_ROUNDS);
         const user = await prisma.user.create({

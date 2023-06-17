@@ -47,16 +47,22 @@ export const Register: React.FC = () => {
             password: pass,
         }),
       });
-        if (response.ok) {
+      if (response.ok) {
+        alert('Registration successful!');
+        navigate("/");
+      } else {
+        if(response.ok) {
           alert('Registration successful!');
           navigate("/");
+        } else if (response.status === 409) {
+          alert('Email is already registered');
         } else {
-          const errorData = await response.json();
-          alert(errorData.message || 'Registration failed');
+          alert('Registration failed');
         }
-      } catch (error) {
-      console.error(error);
-      alert('An error occurred during registration');
+    }
+  } catch (error) {
+        console.error(error);
+        alert('Hello');
       }
     }
   };
