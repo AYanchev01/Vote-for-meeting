@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import authToken from '../middleware/authToken';
+import authToken from '../middlewares/authToken';
 import { AuthenticatedRequest } from '../interfaces/AuthenticationRequest';
 
 const prisma = new PrismaClient();
@@ -99,16 +99,48 @@ router.get('/api/user/events',authToken, async (req: AuthenticatedRequest, res) 
           select: {
             name: true
           }
-        }
+        },
+        userId: true
       }
     });
 
-    res.json(events);
+    res.json({
+      userId: userId,
+      events: events
+    });
+
   } catch (error) {
     console.error('Error fetching user events:', error);
     res.status(500).json({ error: 'An error occurred while fetching events' });
   }
 });
 
+router.delete('/api/events/:eventId', authToken, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const eventId = req.params.eventId;
+    const userId = req.userID;
+    
+    const event = await prisma.event.findUnique({
+      where: { id: eventId }
+    });
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    if (event.userId !== userId) {
+      return res.status(403).json({ message: 'You are not authorized to delete this event' });
+    }
+
+    await prisma.event.delete({
+      where: { id: eventId }
+    });
+
+    res.json({ message: 'Event successfully deleted' });
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 export default router;
