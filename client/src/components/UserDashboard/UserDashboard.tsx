@@ -13,6 +13,7 @@ type Event = {
 
 const UserDashboard: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [searchText, setSearchText] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +35,9 @@ const UserDashboard: React.FC = () => {
     navigate(`/events/${eventId}`);
   };
 
+  // Filter events based on search text
+  const filteredEvents = events.filter(event => event.name.toLowerCase().includes(searchText.toLowerCase()));
+
   return (
     <div>
       {/* Navigation Bar */}
@@ -44,8 +48,20 @@ const UserDashboard: React.FC = () => {
 
       {/* Events List */}
       <div className="events-list">
-        <h1>Your events</h1>
-        {events.map((event) => (
+        <div className="events-list-header">
+          <h1>Your events</h1>
+          <div className="search-wrapper">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            className="search-input"
+          />
+          </div>
+        </div>
+
+        {filteredEvents.map((event) => (
           <div key={event.id} className="event-item" onClick={() => handleEventClick(event.id)}>
             <div className="event-name">{event.name}</div>
             <div className="event-duration">
