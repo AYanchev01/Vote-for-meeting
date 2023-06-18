@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import OrganizerPreview from "./OrganizerPreview";
-import ParticipantPreview from "./ParticipantPreview";
-import ParticipantVoting from "./ParticipantVoting";
+//import ParticipantPreview from "./ParticipantPreview";
+//import ParticipantVoting from "./ParticipantVoting";
 import EventInformation from "./EventInformation"; // Import the EventInformation component
 import './EventPage.css';
 
@@ -15,9 +15,13 @@ const EventPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    const headers = new Headers();
+    headers.append('x-auth-token', token || '');
+    
     const fetchEventData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/events/${eventId}`);
+        const response = await fetch(`http://localhost:3001/api/events/${eventId}`, { headers });
         const data = await response.json();
         setEventData(data.event);
         setPreviewType(data.previewType);
@@ -27,6 +31,7 @@ const EventPage = () => {
     };
     fetchEventData();
   }, [eventId]);
+
 
 
   if (!eventData) {
