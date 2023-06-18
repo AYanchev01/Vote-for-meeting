@@ -41,6 +41,15 @@ const UserDashboard: React.FC = () => {
       .catch(error => console.error('Error fetching events:', error));
   }, []);
 
+  const handleLogout = () => {
+    const userConfirmed = window.confirm("Are you sure you want to logout?");
+    
+    if (userConfirmed) {
+      localStorage.removeItem('accessToken');
+      navigate('/');
+    }
+  };
+
   const handleCreateEvent = () => {
     navigate('/create-event');
   };
@@ -90,7 +99,10 @@ const UserDashboard: React.FC = () => {
       {/* Navigation Bar */}
       <div className="navbar">
         <span className="website-name">Doodle</span>
-        <button className="create-event-btn" onClick={handleCreateEvent}>+ Create</button>
+        <div className="button-container">
+          <button className="create-event-btn" onClick={handleCreateEvent}>+ Create</button>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button> {/* Add logout button */}
+        </div>
       </div>
 
       {/* Events List */}

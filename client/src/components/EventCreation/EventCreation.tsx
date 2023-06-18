@@ -105,11 +105,23 @@ const handleCreateEvent = () => {
     navigate('/dashboard');
   };
 
+  const handleLogout = () => {
+    const userConfirmed = window.confirm("Are you sure you want to logout?");
+  
+    if (userConfirmed) {
+      localStorage.removeItem('accessToken');
+      navigate('/');
+    }
+  };
+
   return (
     <div>
       <div className="navbar">
         <span className="website-name">Doodle</span>
-        <button className="create-event-btn" onClick={handleDashboard}>Dashboard</button>
+        <div className="button-container">
+          <button className="create-event-btn" onClick={handleDashboard}>Dashboard</button>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button> {/* Add logout button */}
+        </div>
       </div>
       <h1>Create a group poll</h1>
       <h2>Title</h2>
