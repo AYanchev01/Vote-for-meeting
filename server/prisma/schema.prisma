@@ -33,8 +33,6 @@ model Event {
   availableTimes DateTime[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
-
-  @@unique([name, userId]) //so that a user cant create two events with the same name
 }
 
 model Vote {

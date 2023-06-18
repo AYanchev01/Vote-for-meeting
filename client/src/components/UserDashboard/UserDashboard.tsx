@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserDashboard.css';
 
@@ -18,6 +18,7 @@ const UserDashboard: React.FC = () => {
   const [searchText, setSearchText] = useState('');
   const navigate = useNavigate();
 
+
   useEffect(() => {
     // Fetch events from server
     const token = localStorage.getItem('accessToken');
@@ -27,12 +28,13 @@ const UserDashboard: React.FC = () => {
     fetch('http://localhost:3001/api/user/events', { headers })
       .then(response => {
         if (response.status === 401) {
+          localStorage.removeItem('accessToken');
+          navigate('/');
           return;
         }
         return response.json();
       })
       .then(data => {
-        console.log('Data fetched: ', data);
         setEvents(data.events);
         setUserId(data.userId);
       })
@@ -48,7 +50,7 @@ const UserDashboard: React.FC = () => {
   };
 
 
-  const handleDeleteEvent = async (eventId: string) => {
+  const handleDeleteEvent = useCallback(async (eventId: string) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
       try {
         const token = localStorage.getItem('accessToken');
@@ -72,7 +74,7 @@ const UserDashboard: React.FC = () => {
         console.error('Error deleting event:', error);
       }
     }
-  };
+  },[]);
 
   // Filter events based on search text
   const filteredEvents = events.filter(event => event.name.toLowerCase().includes(searchText.toLowerCase()));
