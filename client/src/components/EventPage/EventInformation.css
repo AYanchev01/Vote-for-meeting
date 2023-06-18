@@ -1,20 +1,18 @@
 
 .event-info{
-    text-align: center;
-    
+    text-align: left;
+    color:#344955;
     font-size: 20px;
-    background: #eafceb;
-    overflow: hidden;
-    max-width: 345px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #414140; 
-    color:#34495E;
+    transition: box-shadow 0.3s ease;   
+    background-color: #ffffff;
+    padding: 30px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
 .icon {
     padding: 10px;
     min-width: 40px;
-
 }

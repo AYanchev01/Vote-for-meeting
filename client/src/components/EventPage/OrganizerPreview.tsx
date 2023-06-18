@@ -1,33 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';                //to fix error
+import { useParams } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import VotingResult from './VotingResult';
+import './OrganizerPreview.css';
+
 
 type EventData = {
-  id: string;          //types?
-  name: string;          //types?
+  id: string;
+  votes: {
+    userName: string;
+    selectedTimes: string[];
+  }[];
+  availableTimes: string[];
 };
-
 type OrganizerPreviewProps = {
   event: EventData;
 };
+
 const OrganizerPreview: React.FC<OrganizerPreviewProps> = () => {
-  const [event, setEvent] = useState<any>(null);
+  const [event, setEvent] = useState<EventData | null>(null);
   const { eventId } = useParams<{ eventId: string }>();
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // Fetch the event information from your server
-    fetch(`http://localhost:3001/api/events/${eventId}`)               //rework
+    fetch(`http://localhost:3001/api/events/${eventId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => setEvent(data))
+      .then((data) => {
+        console.log('Fetched event data:', data);
+        setEvent(data);
+        console.log('Updated event data:', event);
+      })
       .catch((error) => console.error('There has been a problem with your fetch operation:', error));
-  }, []);
+  }, [eventId]);
 
   if (!event) {
     return <div>Loading event information...</div>;
@@ -39,13 +48,14 @@ const OrganizerPreview: React.FC<OrganizerPreviewProps> = () => {
 
   return (
     <div>
-      <p>Invitation link:</p>
-      <CopyToClipboard text={`http://localhost:3000/events/${event.eventId}`} onCopy={handleCopy}>
-        <button>Copy Link</button>
-      </CopyToClipboard>
-      {copied && <p>Link copied to clipboard!</p>}
-
-      <VotingResult voteData={event.voteData} availableTimes={event.availableTimes} />
+      <div className="invite-link">
+        <p>Invitation link:</p>
+        <CopyToClipboard text={`http://localhost:3000/events/${eventId}`} onCopy={handleCopy}>
+          <button className="link-button">Copy Link</button>
+        </CopyToClipboard>
+      </div>
+      {copied && <p className="copied-to">Link copied to clipboard!</p>}
+      <VotingResult voteData={event.votes} availableTimes={event.availableTimes} />
     </div>
   );
 };

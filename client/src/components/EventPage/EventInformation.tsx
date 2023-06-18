@@ -10,10 +10,10 @@ type EventInformationProps = {
 const EventInformation: React.FC<EventInformationProps> = ({ name, creator, duration }) => {
   return (
     <div className='event-info'>
-      <h2> Event Information</h2>
-      <p><b>{creator}</b> is organizing</p>
-      <p><b>{name}</b></p>
-      <p> Duration: <b>{duration}</b></p>
+      <h2> Event Details</h2>
+      <p><b>👤 {creator}</b> is organizing</p>
+      <p><b>📅 {name}</b></p>
+      <p>🕒 Duration: <b>{duration}</b></p>
     </div>
   );
 };

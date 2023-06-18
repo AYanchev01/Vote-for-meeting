@@ -23,3 +23,28 @@
     background-color:#348f37;
     cursor:pointer;
   }
+  
+  .invite-link{
+    text-align: center;
+    color:#344955;
+    font-size: 25px;
+  }
+
+  .copied-to{
+    text-align: center;
+    margin-right: 5px;
+    color:#2a412b;
+    font-size: 15px;
+  }
+
+  .link-button{
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: #4caf50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }

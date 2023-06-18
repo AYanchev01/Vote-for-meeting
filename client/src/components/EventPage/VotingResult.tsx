@@ -4,27 +4,32 @@ type VotingResultProps = {
   voteData: {
     userName: string;
     selectedTimes: string[];
-  }[];
+  }[] | null;
   availableTimes: string[];
 };
 
 const VotingResult: React.FC<VotingResultProps> = ({ voteData, availableTimes }) => {
   const [sortBy, setSortBy] = useState<string>('');
 
-const sortData = (data: any[], key: string) => {
-  const sortedData = [...data];
-  sortedData.sort((a, b) => {
-    if (key === 'mostVoted') {
-      const countA = a.selectedTimes.filter((time: string) => availableTimes.includes(time)).length;
-      const countB = b.selectedTimes.filter((time: string) => availableTimes.includes(time)).length;
-      return countB - countA;
-    } else if (key === 'dateOrder') {
-      return new Date(a.selectedTimes[0]).getTime() - new Date(b.selectedTimes[0]).getTime();
-    }
-    return 0;
-  });
-  return sortedData;
-};
+
+  if (!voteData) {
+    return <div>No votes yet.</div>;
+  }
+
+  const sortData = (data: any[], key: string) => {
+    const sortedData = [...data];
+    sortedData.sort((a, b) => {
+      if (key === 'mostVoted') {
+        const countA = a.selectedTimes.filter((time: string) => availableTimes.includes(time)).length;
+        const countB = b.selectedTimes.filter((time: string) => availableTimes.includes(time)).length;
+        return countB - countA;
+      } else if (key === 'dateOrder') {
+        return new Date(a.selectedTimes[0]).getTime() - new Date(b.selectedTimes[0]).getTime();
+      }
+      return 0;
+    });
+    return sortedData;
+  };
 
   const handleSortByMostVoted = () => {
     setSortBy('mostVoted');
