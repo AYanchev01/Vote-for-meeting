@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import authToken from '../middlewares/authToken';
 import { AuthenticatedRequest } from '../interfaces/AuthenticationRequest';
@@ -35,7 +35,6 @@ router.get('/api/events/:eventId',authToken, async (req: AuthenticatedRequest, r
                 previewType = 'voting';
             }
         }
-
         // Respond with the event information and preview type
         res.json({
             event,
@@ -51,24 +50,19 @@ router.get('/api/events/:eventId',authToken, async (req: AuthenticatedRequest, r
 router.post('/api/events', authToken, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const { name, duration, availableTimes } = req.body;
-
         const userId = req.userID;
 
         if (!userId) {
           return res.status(400).json({ error: 'userId is required' });
         }
 
-        const data = {
-          name,
-          duration,
-          userId,
-          availableTimes,
-        };
-
-        console.log("Data to be inserted: ", data)
-
         const newEvent = await prisma.event.create({
-            data: data,
+            data: {
+              name,
+              duration,
+              userId,
+              availableTimes,
+            },
         });
 
         //Respond with the newly created event
@@ -81,7 +75,6 @@ router.post('/api/events', authToken, async (req: AuthenticatedRequest, res: Res
 
 router.get('/api/user/events',authToken, async (req: AuthenticatedRequest, res) => {
   try {
-    // const userId = req.user.id;
     const userId = req.userID;
 
     const events = await prisma.event.findMany({
@@ -127,11 +120,9 @@ router.delete('/api/events/:eventId', authToken, async (req: AuthenticatedReques
     if (!event) {
       return res.status(404).json({ message: 'Event not found' });
     }
-
     if (event.userId !== userId) {
       return res.status(403).json({ message: 'You are not authorized to delete this event' });
     }
-
     await prisma.event.delete({
       where: { id: eventId }
     });

@@ -89,6 +89,8 @@ const handleCreateEvent = () => {
     })
       .then((response) => {
         if (response.status === 401) {
+          localStorage.removeItem('accessToken');
+          navigate('/');
           return;
         }
         return response.json();
