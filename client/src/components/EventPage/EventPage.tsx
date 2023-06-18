@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import OrganizerPreview from "./OrganizerPreview";
-//import ParticipantPreview from "./ParticipantPreview";
-//import ParticipantVoting from "./ParticipantVoting";
+import ParticipantPreview from "./ParticipantPreview";
+import ParticipantVoting from "./ParticipantVoting";
 import EventInformation from "./EventInformation"; // Import the EventInformation component
 import './EventPage.css';
 
@@ -42,6 +42,8 @@ const EventPage = () => {
     navigate('/dashboard');
   };
 
+  console.log('Data for event :', eventData)
+
   return (
     <div>
       <div className="navbar">
@@ -54,7 +56,9 @@ const EventPage = () => {
         duration={eventData.duration}
       />
 
-      {previewType === "organizer" && <OrganizerPreview event={eventData} />}
+                      {/* OrganizerPreview */}
+
+      {previewType === "organizer" && <OrganizerPreview event={eventData} />}          
       {/* {previewType === "participant" && <ParticipantPreview event={eventData} />}
       {previewType === "voting" && <ParticipantVoting event={eventData} />} */}
       {/* {previewType !== "organizer" && previewType !== "participant" && previewType !== "voting" && (

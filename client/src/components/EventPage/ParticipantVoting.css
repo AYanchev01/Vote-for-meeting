@@ -11,3 +11,50 @@
     font-size: 24px;
   }
   
+  .submit-button{
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    color: white;
+    background-color: #4caf50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  
+.vote-box{
+  align-items: center;
+  text-align: center;
+  color:#344955;
+  font-size: 20px;
+  transition: box-shadow 0.3s ease;   
+  background-color: #ffffff;
+  padding: 30px;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.row{
+  margin-bottom: 40px;
+}
+
+.vote-text{
+  color:#344955;
+  font-size: 32px;
+}
+
+.checkbox-style{
+  width: 30px;
+  height: 30px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.checkbox-style:checked {
+  background-color: green;
+}

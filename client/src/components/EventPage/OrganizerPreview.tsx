@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';                //to fix error
+import { useParams } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import VotingResult from './VotingResult';
 import './OrganizerPreview.css';
 
 type EventData = {
-  id: string;          //types?
-  name: string;          //types?
+  id: string;
+  name: string;
+  availableTimes: Date[];
+  votes: {
+    votedBy: {
+      id: string;
+      name: string;
+    };
+    selectedTimes: Date[];
+  }[];
 };
 
 type OrganizerPreviewProps = {
   event: EventData;
 };
-const OrganizerPreview: React.FC<OrganizerPreviewProps> = () => {
-  const [event, setEvent] = useState<any>(null);
+
+const OrganizerPreview: React.FC<OrganizerPreviewProps> = ({ event  }) => {
+  const [eventd, setEvent] = useState<EventData | null>(null);
   const { eventId } = useParams<{ eventId: string }>();
   const [copied, setCopied] = useState(false);
 
@@ -23,7 +32,7 @@ const OrganizerPreview: React.FC<OrganizerPreviewProps> = () => {
     headers.append('x-auth-token', token || '');
 
     // Fetch the event information from your server
-    fetch(`http://localhost:3001/api/events/${eventId}`, { headers })               //rework
+    fetch(`http://localhost:3001/api/events/${eventId}`, { headers })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -34,7 +43,7 @@ const OrganizerPreview: React.FC<OrganizerPreviewProps> = () => {
       .catch((error) => console.error('There has been a problem with your fetch operation:', error));
   }, []);
 
-  if (!event) {
+  if (!eventd) {
     return <div>Loading event information...</div>;
   }
 
@@ -52,7 +61,7 @@ const OrganizerPreview: React.FC<OrganizerPreviewProps> = () => {
       </div>
       {copied && <p className='copied-to'>Link copied to clipboard!</p>}
 
-      <VotingResult voteData={event.voteData} availableTimes={event.availableTimes} />
+      {/* {eventd && <VotingResult event={eventd} />} */}
     </div>
   );
 };

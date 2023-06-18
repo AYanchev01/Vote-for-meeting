@@ -1,72 +1,54 @@
 import React, { useState } from 'react';
 
-type VotingResultProps = {
-  voteData: {
-    userName: string;
-    selectedTimes: string[];
-  }[] | null;
-  availableTimes: string[];
+type EventData = {
+  id: string;
+  name: string;
+  availableTimes: Date[];
+  votes: {
+    votedBy: {
+      id: string;
+      name: string;
+    };
+    selectedTimes: Date[];
+  }[];
 };
 
-const VotingResult: React.FC<VotingResultProps> = ({ voteData, availableTimes }) => {
-  const [sortBy, setSortBy] = useState<string>('');
+type VotingResultsProps = {
+  event: EventData;
+};
 
+const VotingResult: React.FC<VotingResultsProps> = ({ event }) => {
+  const [sortedVotes, setSortedVotes] = useState(event.votes);
 
-  if (!voteData) {
-    return <div>No votes yet.</div>;
-  }
-
-  const sortData = (data: any[], key: string) => {
-    const sortedData = [...data];
-    sortedData.sort((a, b) => {
-      if (key === 'mostVoted') {
-        const countA = a.selectedTimes.filter((time: string) => availableTimes.includes(time)).length;
-        const countB = b.selectedTimes.filter((time: string) => availableTimes.includes(time)).length;
-        return countB - countA;
-      } else if (key === 'dateOrder') {
-        return new Date(a.selectedTimes[0]).getTime() - new Date(b.selectedTimes[0]).getTime();
-      }
-      return 0;
-    });
-    return sortedData;
+  const toggleSort = () => {
+    const sorted = [...event.votes];
+    sorted.sort((a, b) => b.selectedTimes.length - a.selectedTimes.length);
+    setSortedVotes(sorted);
   };
-
-  const handleSortByMostVoted = () => {
-    setSortBy('mostVoted');
-  };
-
-  const handleSortByDateOrder = () => {
-    setSortBy('dateOrder');
-  };
-
-  const sortedVoteData = sortData(voteData, sortBy);
 
   return (
     <div>
-      <div>
-        <button onClick={handleSortByMostVoted}>Sort by Most Voted</button>
-        <button onClick={handleSortByDateOrder}>Sort by Date Order</button>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            {availableTimes.map((time) => (
-              <th key={time}>{time}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedVoteData.map((vote) => (
-            <tr key={vote.userName}>
-              <td>{vote.userName}</td>
-              {availableTimes.map((time) => (
-                <td key={time}>{vote.selectedTimes.includes(time) ? 'X' : ''}</td>
-              ))}
-            </tr>
+      <h2>Voting Results</h2>
+      <button onClick={toggleSort}>Sort by Votes (Most to Least)</button>
+      <div className="vote-results">
+        <div className="vote-results-header">
+          {event.availableTimes.map((time, index) => (
+            <div key={index} className="vote-results-cell">
+              {time.toString()}
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+        {sortedVotes.map((vote) => (
+          <div key={vote.votedBy.id} className="vote-results-row">
+            <div className="vote-results-cell">{vote.votedBy.name}</div>
+            {event.availableTimes.map((time, index) => (
+              <div key={index} className="vote-results-cell">
+                {vote.selectedTimes.includes(time) ? 'X' : ''}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
