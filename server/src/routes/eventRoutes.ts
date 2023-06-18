@@ -11,6 +11,10 @@ router.get('/api/events/:eventId',authToken, async (req: AuthenticatedRequest, r
         const eventId = req.params.eventId;
         const userId = req.userID;
 
+        if (!userId) {
+          return res.status(401).json({ message: 'Unauthorized' });
+        }
+
         const event = await prisma.event.findUnique({
             where: { id: eventId },
             include: { 
@@ -53,7 +57,7 @@ router.post('/api/events', authToken, async (req: AuthenticatedRequest, res: Res
         const userId = req.userID;
 
         if (!userId) {
-          return res.status(400).json({ error: 'userId is required' });
+          return res.status(401).json({ message: 'Unauthorized' });
         }
 
         const newEvent = await prisma.event.create({
@@ -76,6 +80,10 @@ router.post('/api/events', authToken, async (req: AuthenticatedRequest, res: Res
 router.get('/api/user/events',authToken, async (req: AuthenticatedRequest, res) => {
   try {
     const userId = req.userID;
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
 
     const events = await prisma.event.findMany({
       where: {
@@ -113,6 +121,10 @@ router.delete('/api/events/:eventId', authToken, async (req: AuthenticatedReques
     const eventId = req.params.eventId;
     const userId = req.userID;
     
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
     const event = await prisma.event.findUnique({
       where: { id: eventId }
     });

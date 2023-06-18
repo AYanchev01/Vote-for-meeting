@@ -56,15 +56,21 @@ const UserDashboard: React.FC = () => {
         const token = localStorage.getItem('accessToken');
         const headers = new Headers();
         headers.append('x-auth-token', token || '');
-  
+
         const response = await fetch(`http://localhost:3001/api/events/${eventId}`, {
           method: 'DELETE',
           headers: headers,
         });
-  
+
+        if (response.status === 401) {
+          localStorage.removeItem('accessToken');
+          navigate('/');
+          return;
+        }
+
         if (response.ok) {
           await response.json();
-  
+
           // Event deleted successfully, now update the events state
           setEvents(prevEvents => prevEvents.filter(event => event.id !== eventId));
         } else {
