@@ -39,6 +39,26 @@
   font-size: 24px;
 }
 
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.logout-btn {
+  background-color: transparent;
+  color: white; 
+  border: none;
+  padding: 8px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-left: 5px; 
+}
+
+.logout-btn:hover {
+  color: #444444;
+}
+
 .error-message {
     color: red;
     font-size: 18px;
