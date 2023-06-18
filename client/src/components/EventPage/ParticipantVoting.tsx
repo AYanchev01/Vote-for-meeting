@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ParticipantVoting.css';
+import { useNavigate } from 'react-router-dom';
 
 interface ParticipantVotingProps {
   event: {
@@ -17,6 +18,8 @@ interface ParticipantVotingProps {
 const ParticipantVoting = ({ event }: ParticipantVotingProps) => {  
   const [selectedTimes, setSelectedTimes] = useState<Date[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleTimeSelection = (time: Date) => {
     if (selectedTimes.includes(time)) {
@@ -43,11 +46,15 @@ const ParticipantVoting = ({ event }: ParticipantVotingProps) => {
         selectedTimes,
       };
 
-      const response = await fetch('http://localhost:3001/api/events', {
+      const token = localStorage.getItem('accessToken');
+
+      const headers = new Headers();
+      headers.append('x-auth-token', token || '');
+      headers.append('Content-Type', 'application/json');
+
+      const response = await fetch(`http://localhost:3001/api/events/${event.id}/votes`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify(vote),
       });
 

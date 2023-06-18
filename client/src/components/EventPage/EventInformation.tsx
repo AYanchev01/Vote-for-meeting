@@ -3,7 +3,7 @@ import './EventInformation.css';
 
 type EventInformationProps = {
   name: string;
-  creator: string;       //createdBy
+  creator: string;       
   duration: string;
 };
 

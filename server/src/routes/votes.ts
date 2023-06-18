@@ -22,7 +22,6 @@
 //         return res.status(404).json({ message: 'Event not found' });
 //       }
   
-//       // Check if the user has already voted
 //       const userVote = event.votes.find((vote) => vote.userId === userId);
   
 //       if (userVote) {

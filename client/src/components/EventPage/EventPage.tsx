@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import OrganizerPreview from "./OrganizerPreview";
 import ParticipantPreview from "./ParticipantPreview";
 import ParticipantVoting from "./ParticipantVoting";
-import EventInformation from "./EventInformation"; // Import the EventInformation component
+import EventInformation from "./EventInformation"; 
 import './EventPage.css';
 
 const EventPage = () => {
   const { eventId } = useParams();
-  const [eventData, setEventData] = useState<any>(); // set initial data for eventData
+  const [eventData, setEventData] = useState<any>(); 
   const [previewType, setPreviewType] = useState<string>('');
 
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const EventPage = () => {
 
                       {/* OrganizerPreview */}
 
-      {previewType === "organizer" && <OrganizerPreview event={eventData} />}          
+      {previewType === "organizer" && <ParticipantVoting event={eventData} />}          
       {/* {previewType === "participant" && <ParticipantPreview event={eventData} />}
       {previewType === "voting" && <ParticipantVoting event={eventData} />} */}
       {/* {previewType !== "organizer" && previewType !== "participant" && previewType !== "voting" && (

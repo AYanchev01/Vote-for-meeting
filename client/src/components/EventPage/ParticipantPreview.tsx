@@ -2,43 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import VotingResult from './VotingResult';
 
-interface VoteData {
-  userName: string;
-  selectedTimes: Date[];           //Date[]
-}
+type EventData = {
+  id: string;
+  name: string;
+  availableTimes: Date[];
+  votes: {
+    votedBy: {
+      id: string;
+      name: string;
+    };
+    selectedTimes: Date[];
+  }[];
+};
 
-interface ParticipantPreviewProps {
-  event: {
-    voteData: VoteData[]; 
-    availableTimes: string[];           //Date[]
-  };
-}
+type ParticipantPreviewProps = {
+  event: EventData;
+};
 
-const ParticipantPreview: React.FC<ParticipantPreviewProps> = ({ event }) => {
+const ParticipantPreview: React.FC<ParticipantPreviewProps> = ({ event  }) => {
+  const [eventd, setEvent] = useState<EventData | null>(null);
   const { eventId } = useParams<{ eventId: string }>();
-  const [eventData, setEventData] = useState<{
-    voteData: VoteData[];
-    availableTimes: string[];
-  } | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/events/${eventId}`)
+    const token = localStorage.getItem('accessToken');
+    const headers = new Headers();
+    headers.append('x-auth-token', token || '');
+
+    fetch(`http://localhost:3001/api/events/${eventId}`, { headers })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => setEventData(data))
+      .then((data) => setEvent(data))
       .catch((error) => console.error('There has been a problem with your fetch operation:', error));
-  }, [eventId]);
+  }, []);
 
-  if (!eventData) {
-    return <div>Loading...</div>;
+  if (!eventd) {
+    return <div>Loading event information...</div>;
   }
 
-  console.log('Info', eventData)
-
+  
   return (
     <div>
       <h1>Response submitted!</h1>
@@ -49,49 +54,3 @@ const ParticipantPreview: React.FC<ParticipantPreviewProps> = ({ event }) => {
 };
 
 export default ParticipantPreview;
-
-
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import VotingResult from './VotingResult';
-
-// type EventData = {
-//   voteData: {
-//     userName: string;
-//     selectedTimes: string[];
-//   }[];
-//   availableTimes: string[];
-// };
-
-// type ParticipantPreviewProps = {
-//   event: EventData;
-// };
-
-// const ParticipantPreview: React.FC<ParticipantPreviewProps> = () => {    
-//   const { eventId } = useParams<{ eventId: string }>();
-//   const [event, setEvent] = useState<EventData | null>(null);
-
-//   useEffect(() => {
-//     fetch(`http://localhost:3001/api/events/${eventId}`)
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//       })
-//       .then((data) => setEvent(data))
-//       .catch((error) => console.error('There has been a problem with your fetch operation:', error));
-//   }, [eventId]);
-
-//   if (!event) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div>
-//       <h1>Response submitted!</h1>
-//       <p>Results:</p>
-//       <VotingResult voteData={event.voteData} availableTimes={event.availableTimes} />
-//     </div>
-//   );
-// };

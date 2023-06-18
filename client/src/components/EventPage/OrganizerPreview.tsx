@@ -31,7 +31,6 @@ const OrganizerPreview: React.FC<OrganizerPreviewProps> = ({ event  }) => {
     const headers = new Headers();
     headers.append('x-auth-token', token || '');
 
-    // Fetch the event information from your server
     fetch(`http://localhost:3001/api/events/${eventId}`, { headers })
       .then((response) => {
         if (!response.ok) {
