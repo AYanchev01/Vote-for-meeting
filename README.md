@@ -24,8 +24,7 @@
 
 # Introduction
 
-Vote for Meeting is a Doodle-clone web app that lets users schedule meetings by creating events, setting options for the available dates and times and sharing with other users who can vote in order to decide on the most wanted option. The application is built with React, TypeScript, Node.js, Express, PostgreSQL, Prisma ORM, Docker, Git and Github Actions.
-
+Vote for Meeting is a Doodle-clone web app that lets users schedule meetings by creating events, setting options for the available dates and times and sharing with other users who can vote in order to decide on the most wanted option. The application is built with React, TypeScript, Node.js, Express, PostgreSQL, Prisma ORM, Docker and Git.
 # Requirements
 
 This project requires the following software:
