@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/a0g6yG0.png">
-  <img src="https://i.imgur.com/a0g6yG0.png" alt="Logo" width="" height="300">
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/kdTmymq.png">
+  <img src="https://i.imgur.com/kdTmymq.png" alt="Logo" width="" height="300">
 </picture>
 <div id="top"></div>
 
