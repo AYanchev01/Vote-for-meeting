@@ -1,0 +1,14 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .website-name {
+    margin-left: 10px;
+    margin-top: 10px;
+    font-size: 24px;
+  }
+  

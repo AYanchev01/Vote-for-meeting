@@ -1,0 +1,18 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .website-name {
+    margin-left: 10px;
+    font-size: 24px;
+  }
+  
+.result-title{
+  text-align: left;
+  color:#344955;
+  font-size: 25px;
+}

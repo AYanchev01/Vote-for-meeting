@@ -18,7 +18,7 @@ router.get('/api/events/:eventId',authToken, async (req: AuthenticatedRequest, r
         const event = await prisma.event.findUnique({
             where: { id: eventId },
             include: { 
-                votes: true,
+                votes: {include:{votedBy: true}},
                 createdBy: true,
             }
         });
