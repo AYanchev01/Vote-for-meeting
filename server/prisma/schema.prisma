@@ -16,7 +16,6 @@ model User {
   password     String
   name         String
   votedFor     Vote[]
-  invitedEvent Event[]  @relation("Participants")
   createdEvent Event[]  @relation("Created by")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -28,7 +27,6 @@ model Event {
   duration       String
   votes          Vote[]
   createdBy      User       @relation("Created by", fields: [userId], references: [id])
-  participants   User[]     @relation("Participants")
   userId         String
   availableTimes DateTime[]
   createdAt      DateTime   @default(now())
