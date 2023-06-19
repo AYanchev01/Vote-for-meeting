@@ -1,4 +1,4 @@
-<div style="font-size:48px;"> Vote for Meeting</div>
+<h1> Vote for meeting </h1>
 <div id="top"></div>
 
 <!-- TABLE OF CONTENTS -->
