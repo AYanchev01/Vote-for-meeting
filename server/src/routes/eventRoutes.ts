@@ -20,7 +20,6 @@ router.get('/api/events/:eventId',authToken, async (req: AuthenticatedRequest, r
             include: { 
                 votes: true,
                 createdBy: true,
-                participants: true
             }
         });
 
@@ -77,7 +76,7 @@ router.post('/api/events', authToken, async (req: AuthenticatedRequest, res: Res
     }
 });
 
-router.get('/api/user/events',authToken, async (req: AuthenticatedRequest, res) => {
+router.get('/api/user/events', authToken, async (req: AuthenticatedRequest, res) => {
   try {
     const userId = req.userID;
 
@@ -89,7 +88,13 @@ router.get('/api/user/events',authToken, async (req: AuthenticatedRequest, res) 
       where: {
         OR: [
           { userId: userId },
-          { participants: { some: { id: userId } } }
+          {
+            votes: {
+              some: {
+                votedBy: { id: userId }
+              }
+            }
+          }
         ]
       },
       select: {
