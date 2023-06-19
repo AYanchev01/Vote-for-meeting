@@ -22,17 +22,24 @@ const EventPage = () => {
     const fetchEventData = async () => {
       try {
         const response = await fetch(`http://localhost:3001/api/events/${eventId}`, { headers });
-        const data = await response.json();
-        setEventData(data.event);
-        setPreviewType(data.previewType);
+        
+        if (response.status === 401) {
+          localStorage.removeItem('accessToken');
+          navigate('/');
+          return;
+        }
+
+        if (response.ok) {
+          const data = await response.json();
+          setEventData(data.event);
+          setPreviewType(data.previewType);
+        }
       } catch (error) {
         console.error("Error fetching event data:", error);
       }
     };
     fetchEventData();
   }, [eventId]);
-
-
 
   if (!eventData) {
     return <div>Loading...</div>;
@@ -41,8 +48,6 @@ const EventPage = () => {
   const handleDashboard = () => {
     navigate('/dashboard');
   };
-
-  console.log('Data for event :', eventData)
 
   return (
     <div>
@@ -55,15 +60,12 @@ const EventPage = () => {
         creator={eventData.createdBy.name}
         duration={eventData.duration}
       />
-
-                      {/* OrganizerPreview */}
-
-      {previewType === "organizer" && <ParticipantVoting event={eventData} />}          
-      {/* {previewType === "participant" && <ParticipantPreview event={eventData} />}
-      {previewType === "voting" && <ParticipantVoting event={eventData} />} */}
-      {/* {previewType !== "organizer" && previewType !== "participant" && previewType !== "voting" && (
+      {previewType === "organizer" && <OrganizerPreview event={eventData} />}          
+      {previewType === "participant" && <ParticipantPreview event={eventData} />}
+      {previewType === "voting" && <ParticipantVoting event={eventData} />}
+      {previewType !== "organizer" && previewType !== "participant" && previewType !== "voting" && (
         <div>Something went wrong</div>
-      )} */}
+      )}
     </div>
   );
 };

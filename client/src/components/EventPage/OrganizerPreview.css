@@ -11,19 +11,6 @@
     font-size: 24px;
   }
   
-  .inv-button {
-    border-radius: 2px;
-    background-color: #4caf50;
-    justify-content: center;
-    display: flex;
-    margin: auto;
-  }
-
-  .inv-button:hover{
-    background-color:#348f37;
-    cursor:pointer;
-  }
-  
   .invite-link{
     text-align: center;
     color:#344955;

@@ -22,30 +22,9 @@ type OrganizerPreviewProps = {
 };
 
 const OrganizerPreview: React.FC<OrganizerPreviewProps> = ({ event  }) => {
-  const [eventd, setEvent] = useState<EventData | null>(null);
   const { eventId } = useParams<{ eventId: string }>();
   const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    const headers = new Headers();
-    headers.append('x-auth-token', token || '');
-
-    fetch(`http://localhost:3001/api/events/${eventId}`, { headers })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => setEvent(data))
-      .catch((error) => console.error('There has been a problem with your fetch operation:', error));
-  }, []);
-
-  if (!eventd) {
-    return <div>Loading event information...</div>;
-  }
-
+  
   const handleCopy = () => {
     setCopied(true);
   };
@@ -59,8 +38,7 @@ const OrganizerPreview: React.FC<OrganizerPreviewProps> = ({ event  }) => {
         </CopyToClipboard>
       </div>
       {copied && <p className='copied-to'>Link copied to clipboard!</p>}
-
-      {/* {eventd && <VotingResult event={eventd} />} */}
+      {event  && <VotingResult event={event} />}
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import './VotingResults.css';
 
 type EventData = {
   id: string;
@@ -20,37 +21,57 @@ type VotingResultsProps = {
 const VotingResult: React.FC<VotingResultsProps> = ({ event }) => {
   const [sortedVotes, setSortedVotes] = useState(event.votes);
 
-  const toggleSort = () => {
-    const sorted = [...event.votes];
+  useEffect(() => {
+    setSortedVotes(event.votes);
+  }, [event.votes]);
+
+  const sorting = () => {
+    const sorted = [...sortedVotes];
     sorted.sort((a, b) => b.selectedTimes.length - a.selectedTimes.length);
     setSortedVotes(sorted);
   };
-
+    
   return (
-    <div>
+    <div className="event-info">
       <h2>Voting Results</h2>
-      <button onClick={toggleSort}>Sort by Votes (Most to Least)</button>
-      <div className="vote-results">
-        <div className="vote-results-header">
-          {event.availableTimes.map((time, index) => (
-            <div key={index} className="vote-results-cell">
-              {time.toString()}
-            </div>
-          ))}
-        </div>
-        {sortedVotes.map((vote) => (
-          <div key={vote.votedBy.id} className="vote-results-row">
-            <div className="vote-results-cell">{vote.votedBy.name}</div>
-            {event.availableTimes.map((time, index) => (
-              <div key={index} className="vote-results-cell">
-                {vote.selectedTimes.includes(time) ? 'X' : ''}
-              </div>
+       <div className="button-sort-container">
+        <button className="sort-button" onClick={sorting}> See who has voted the most </button>
+       </div>
+      <div className="table-container">
+      <table className="vote-results">
+        <thead>
+          <tr>
+            <th className="vote-results-cell voter-name">Name</th>
+            {event.availableTimes.map((time, index) => {
+              const dateObj = new Date(time);
+              const formattedDate = dateObj.toUTCString().replace(" GMT", "").replace(/:\d{2}$/, "");
+              return (
+                <th key={index} className="vote-results-cell vote-time">
+                  {formattedDate}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {sortedVotes.map((vote) => (
+            <tr key={vote.votedBy.id}>
+              <td className="vote-results-cell voter-name">{vote.votedBy.name}</td>
+              {event.availableTimes.map((time, index) => (
+                <td
+                 key={index}
+                  className="vote-results-cell vote-time">
+                     {vote.selectedTimes.includes(time) ? "✔️" : ""}
+                  </td>
             ))}
-          </div>
-        ))}
-      </div>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
     </div>
   );
+  
 };
 
 export default VotingResult;

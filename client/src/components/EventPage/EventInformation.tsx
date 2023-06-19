@@ -1,7 +1,7 @@
 import React from 'react';
 import './EventInformation.css';
 
-type EventInformationProps = {
+type EventInformationProps = {        
   name: string;
   creator: string;       
   duration: string;

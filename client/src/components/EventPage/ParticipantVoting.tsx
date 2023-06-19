@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import './ParticipantVoting.css';
 import { useNavigate } from 'react-router-dom';
 
-interface ParticipantVotingProps {
+type ParticipantVotingProps = { 
   event: {
     id: string;
     availableTimes: Date[];
-    // Add other properties as needed, including participant information
     participant: {
       id: string;
       name: string;
-      // Add other participant properties as needed
     };
   };
 }
@@ -20,7 +18,6 @@ const ParticipantVoting = ({ event }: ParticipantVotingProps) => {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-
   const handleTimeSelection = (time: Date) => {
     if (selectedTimes.includes(time)) {
       setSelectedTimes(selectedTimes.filter((selectedTime) => selectedTime !== time));
@@ -28,8 +25,6 @@ const ParticipantVoting = ({ event }: ParticipantVotingProps) => {
       setSelectedTimes([...selectedTimes, time]);
     }
   };
-
-  console.log("Selected times", selectedTimes)
 
   const handleSubmit = async () => {
     if (submitting || selectedTimes.length === 0) {
@@ -39,33 +34,23 @@ const ParticipantVoting = ({ event }: ParticipantVotingProps) => {
     setSubmitting(true);
 
     try {
-      const vote = {
-        userId: event.participant.id,     //but its just the voter who is logged in 's name
-        votedBy: event.participant.name,     //but its just the voter who is logged in 's id
-        eventId: event.id,
-        selectedTimes,
-      };
-
       const token = localStorage.getItem('accessToken');
 
       const headers = new Headers();
       headers.append('x-auth-token', token || '');
       headers.append('Content-Type', 'application/json');
 
-      const response = await fetch(`http://localhost:3001/api/events/${event.id}/votes`, {
+      const response = await fetch(`http://localhost:3001/api/events/${event.id}`, {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify(vote),
+        body: JSON.stringify({selectedTimes}),
       });
 
       if (!response.ok) {
         throw new Error('Failed to create vote');
       }
-
-      // Handle successful vote submission
-
-      // Reset selected times
       setSelectedTimes([]);
+      window.location.href = window.location.href;    
     } catch (error) {
       console.error('Error creating vote:', error);
     } finally {
@@ -75,23 +60,38 @@ const ParticipantVoting = ({ event }: ParticipantVotingProps) => {
 
   return (
     <div className='vote-box'>
-      <p className='vote-text'>Select your preferred times:</p>
-      {event.availableTimes.map((time, index) => (
-      <div key={index}>
-        <label className='row'>
-         <input className='checkbox-style'
-            type="checkbox"
-            checked={selectedTimes.includes(time)}
-            onChange={() => handleTimeSelection(time)}
-         />{' '}
-         {time.toString()} {/* Convert Date to string */}
-       </label>
+      <div>
+        <p className='vote-text'>Select your preferred times:</p>
+        {event.availableTimes.map((time, index) => {
+          const dateObj = new Date(time);
+          const formattedDate = dateObj.toUTCString().replace(' GMT', '').replace(/:\d{2}$/, '');
+  
+          return (
+            <div key={index}>
+              <label>
+                <input
+                  className='checkbox-style'
+                  type="checkbox"
+                  checked={selectedTimes.includes(time)}
+                  onChange={() => handleTimeSelection(time)}
+                />{' '}
+                <div className='checkbox-text-style'>
+                  {formattedDate}
+                </div>
+              </label>
+            </div>
+          );
+        })}
       </div>
-))}
-
-      <button className='submit-button' onClick={handleSubmit} disabled={submitting || selectedTimes.length === 0}>
-        Submit Vote
-      </button>
+      <div className="button-vote-container">
+        <button
+          className='submit-button'
+          onClick={handleSubmit}
+          disabled={submitting || selectedTimes.length === 0}
+        >
+          Submit Vote
+        </button>
+      </div>
     </div>
   );
 };
