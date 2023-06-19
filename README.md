@@ -1,4 +1,7 @@
-<h1> Vote for meeting </h1>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/a0g6yG0.png">
+  <img src="https://i.imgur.com/a0g6yG0.png" alt="Logo" width="" height="300">
+</picture>
 <div id="top"></div>
 
 <!-- TABLE OF CONTENTS -->
