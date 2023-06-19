@@ -1,7 +1,7 @@
-version: '3'
+version: '3.8'
 services:
   server:
-    container_name: doodle_server 
+    container_name: doodle_server
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -11,8 +11,10 @@ services:
       - db
     restart: on-failure
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/doodledb?schema=public
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/doodledb"
       ACCESS_TOKEN_SECRET: "random1234wordrandom"
+    entrypoint: ["sh", "/home/doodle/server/run-migrations.sh"]
+
   client:
     container_name: doodle_client
     build:
