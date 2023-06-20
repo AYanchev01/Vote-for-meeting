@@ -77,6 +77,12 @@ POSTGRES_DB:
 docker-compose up --build -d
 ```
 
+4. Access the application
+
+<p><small>After your Docker environment is up and running, navigate to <a href="http://localhost:3000/" target="_blank">http://localhost:3000/</small></p>
+
+Enjoy using the Vote for Meeting web app!
+
 ## Running locally
 - Install [Node.js](https://nodejs.org/en/download)
 - Install [PostgreSQL](https://www.postgresql.org/download/)
@@ -86,4 +92,5 @@ docker-compose up --build -d
 - Run ```npx prisma migrate dev``` and ```npx prisma generate``` in server/
 - Run ```npm start``` in server/
 - Run ```npm start``` in client/
+- <p><small>Navigate to <a href="http://localhost:3000/" target="_blank">http://localhost:3000/</small></p>
 <div align="right"><p align="right">(<a href="#top">back to top</a>)</p></div>
