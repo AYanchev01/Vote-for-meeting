@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Event API
-  description: API documentation for Event Application
+  title: Vote for Meeting API
+  description: API documentation for Vote for Meeting application
 servers:
   - url: / 
 
