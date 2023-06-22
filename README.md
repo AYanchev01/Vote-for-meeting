@@ -15,10 +15,10 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#quickstart">Getting Started</a>
-    </li>
+    <li><a href="#quickstart">Getting Started</a></li>
     <li><a href="#running-locally">Running Locally</a></li>
+    <li><a href="#documentation">Documentation</a></li>
+    
   </ol>
 </details>
 
@@ -93,4 +93,8 @@ Enjoy using the Vote for Meeting web app!
 - Run ```npm start``` in server/
 - Run ```npm start``` in client/
 - <p><small>Navigate to <a href="http://localhost:3000/" target="_blank">http://localhost:3000/</small></p>
+<div align="right"><p align="right">(<a href="#top">back to top</a>)</p></div>
+
+## Documentation
+- You can access the api documentation by starting the server and visiting <a href="http://localhost:3001/api-docs" target="_blank">here.
 <div align="right"><p align="right">(<a href="#top">back to top</a>)</p></div>
