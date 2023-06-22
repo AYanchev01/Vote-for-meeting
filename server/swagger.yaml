@@ -1,0 +1,206 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Event API
+  description: API documentation for Event Application
+servers:
+  - url: / 
+
+paths:
+  /api/events/{eventId}:
+    get:
+      security:
+        - xAuthToken: []     
+      tags:
+        - Events
+      summary: Get a specific event by its ID
+      parameters:
+        - in: path
+          name: eventId
+          schema:
+            type: string
+          required: true
+          description: The ID of the event
+      responses:
+        '200':
+          description: An object of event info
+        '401':
+          description: Unauthorized
+        '404':
+          description: Event not found
+        '500':
+          description: Internal server error
+    post:
+      security:
+        - xAuthToken: []
+      tags:
+        - Events
+      summary: Create a vote for a specific event by its ID
+      parameters:
+        - in: path
+          name: eventId
+          schema:
+            type: string
+          required: true
+          description: The ID of the event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selectedTimes:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - selectedTimes
+      responses:
+        '200':
+          description: Vote created successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Event not found
+        '500':
+          description: Internal server error
+    delete:
+      security:
+        - xAuthToken: []     
+      tags:
+        - Events
+      summary: Delete a specific event by its ID
+      parameters:
+        - in: path
+          name: eventId
+          schema:
+            type: string
+          required: true
+          description: The ID of the event
+      responses:
+        '200':
+          description: Event successfully deleted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Not authorized to delete this event
+        '404':
+          description: Event not found
+        '500':
+          description: Internal server error
+  /api/events:
+    post:
+      security:
+        - xAuthToken: []     
+      tags:
+        - Events
+      summary: Create a new event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                duration:
+                  type: integer
+                availableTimes:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - name
+                - duration
+                - availableTimes
+      responses:
+        '201':
+          description: Event created successfully
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /api/user/events:
+    get:
+      security:
+        - xAuthToken: []
+      tags:
+        - User
+      summary: Get all events of a user
+      responses:
+        '200':
+          description: An object of user info and events
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /register:
+    post:
+      tags:
+        - User
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - firstName
+                - lastName
+                - email
+                - password
+      responses:
+        '200':
+          description: User registered successfully
+        '400':
+          description: Bad request
+        '409':
+          description: User already exists
+  /:
+    post:
+      tags:
+        - User
+      summary: Log in a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Login successful, returns access token
+        '401':
+          description: Unauthorized
+        '400':
+          description: Bad request
+
+components:
+  securitySchemes:
+    xAuthToken:
+      type: apiKey
+      in: header
+      name: x-auth-token
+
+
