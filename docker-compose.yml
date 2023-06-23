@@ -35,6 +35,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: doodledb
     volumes:
-      - pg_data:/var/lib/postgresql
+      - pg_data:/var/lib/postgresql/data
 volumes:
   pg_data: {}
