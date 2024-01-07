@@ -60,16 +60,7 @@ The app has been built with the following technologies:
 git clone https://github.com/AYanchev01/Vote-for-meeting.git
 ```
 
-2. Configure the environment variables in the docker-compose.yml file or you can leave the default ones.
-
-```yml
-DATABASE_URL:
-ACCESS_TOKEN_SECRET:
-
-POSTGRES_PASSWORD:
-POSTGRES_USER:
-POSTGRES_DB:
-```
+2. Copy .env.template to .env and set up the variables or leave the default ones.
 
 3. Compose the project
 
