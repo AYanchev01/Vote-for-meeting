@@ -40,7 +40,7 @@ const ParticipantVoting = ({ event }: ParticipantVotingProps) => {
       headers.append('x-auth-token', token || '');
       headers.append('Content-Type', 'application/json');
 
-      const response = await fetch(`http://localhost:3001/api/events/${event.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/events/${event.id}`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({selectedTimes}),

@@ -32,7 +32,7 @@ export const Register: React.FC = () => {
       alert('Invalid email!');
     } else {
       try{
-        const response = await fetch('http://localhost:3001/register', {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

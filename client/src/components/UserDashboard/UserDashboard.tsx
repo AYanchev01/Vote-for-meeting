@@ -25,7 +25,7 @@ const UserDashboard: React.FC = () => {
     const headers = new Headers();
     headers.append('x-auth-token', token || '');
 
-    fetch('http://localhost:3001/api/user/events', { headers })
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/events`, { headers })
       .then(response => {
         if (response.status === 401) {
           localStorage.removeItem('accessToken');
@@ -66,7 +66,7 @@ const UserDashboard: React.FC = () => {
         const headers = new Headers();
         headers.append('x-auth-token', token || '');
 
-        const response = await fetch(`http://localhost:3001/api/events/${eventId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/events/${eventId}`, {
           method: 'DELETE',
           headers: headers,
         });

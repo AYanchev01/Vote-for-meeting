@@ -2,6 +2,12 @@
 FROM node:18.0.0-alpine3.14 as builder
 WORKDIR /home/doodle/client
 
+# Add ARG for REACT_APP_SERVER_URL
+ARG REACT_APP_SERVER_URL
+
+# Set the environment variable
+ENV REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL
+
 # Install dependencies
 COPY package*.json ./
 RUN npm install
@@ -24,7 +30,7 @@ USER doodle
 COPY --from=builder /home/doodle/client/build ./build
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE ${CLIENT_PORT}
 
 # Start the application
 CMD ["npx", "serve", "-s", "build"]

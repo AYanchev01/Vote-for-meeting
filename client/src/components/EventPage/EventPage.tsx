@@ -21,7 +21,7 @@ const EventPage = () => {
     
     const fetchEventData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/events/${eventId}`, { headers });
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/events/${eventId}`, { headers });
         
         if (response.status === 401) {
           localStorage.removeItem('accessToken');

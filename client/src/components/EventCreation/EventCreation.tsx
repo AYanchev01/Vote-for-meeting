@@ -82,7 +82,7 @@ const handleCreateEvent = () => {
     headers.append('Content-Type', 'application/json');
 
     // POST request to create a new event
-    fetch('http://localhost:3001/api/events', {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/events`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(event),

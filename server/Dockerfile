@@ -45,4 +45,4 @@ COPY --chown=doodle ./run-migrations.sh ./run-migrations.sh
 RUN chmod +x ./run-migrations.sh
 
 # Expose the port the app runs on
-EXPOSE 3001
+EXPOSE ${SERVER_PORT}
