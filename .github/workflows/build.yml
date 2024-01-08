@@ -19,6 +19,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+      - name: Cache Node modules (Server)
+        uses: actions/cache@v3
+        with:
+          path: server/node_modules
+          key: ${{ runner.os }}-server-node-${{ hashFiles('server/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-server-node-
       - name: Install dependencies
         run: cd server && npm ci
       - name: Lint
@@ -36,6 +43,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+      - name: Cache Node modules (Client)
+        uses: actions/cache@v3
+        with:
+          path: client/node_modules
+          key: ${{ runner.os }}-client-node-${{ hashFiles('client/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-client-node-
       - name: Install dependencies
         run: cd client && npm ci
       - name: Build
