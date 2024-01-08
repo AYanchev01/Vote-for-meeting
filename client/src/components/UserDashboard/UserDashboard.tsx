@@ -39,7 +39,7 @@ const UserDashboard: React.FC = () => {
         setUserId(data.userId);
       })
       .catch(error => console.error('Error fetching events:', error));
-  }, []);
+  }, [navigate]);
 
   const handleLogout = () => {
     const userConfirmed = window.confirm("Are you sure you want to logout?");
@@ -89,7 +89,7 @@ const UserDashboard: React.FC = () => {
         console.error('Error deleting event:', error);
       }
     }
-  },[]);
+  },[navigate]);
 
   // Filter events based on search text
   const filteredEvents = events.filter(event => event.name.toLowerCase().includes(searchText.toLowerCase()));

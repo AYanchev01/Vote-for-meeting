@@ -28,6 +28,7 @@ export const Register: React.FC = () => {
       alert('Password must contain 6 to 16 characters, at least one digit and at least one symbol!');
     } else if (pass !== confirmPass) {
       alert("Passwords don't match!");
+      //eslint-disable-next-line
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       alert('Invalid email!');
     } else {

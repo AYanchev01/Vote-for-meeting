@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 import authToken from '../middlewares/authToken';
 import { AuthenticatedRequest } from '../interfaces/AuthenticationRequest';

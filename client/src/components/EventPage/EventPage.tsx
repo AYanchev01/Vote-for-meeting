@@ -39,7 +39,7 @@ const EventPage = () => {
       }
     };
     fetchEventData();
-  }, [eventId]);
+  }, [eventId, navigate]);
 
   if (!eventData) {
     return <div>Loading...</div>;

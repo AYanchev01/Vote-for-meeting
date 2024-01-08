@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import VotingResult from './VotingResult';
 
 type EventData = {
@@ -20,7 +19,6 @@ type ParticipantPreviewProps = {
 };
 
 const ParticipantPreview: React.FC<ParticipantPreviewProps> = ({ event  }) => {
-  const { eventId } = useParams<{ eventId: string }>();
 
   return (
     <div>

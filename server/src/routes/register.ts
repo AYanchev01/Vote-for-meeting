@@ -1,6 +1,5 @@
-import { Router, response } from 'express';
+import { Router } from 'express';
 import authService from '../services/authService';
-import jwt from 'jsonwebtoken';
 const router = Router();
 
 router.post('/register', async (req, res) => {

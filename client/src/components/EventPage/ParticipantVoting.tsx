@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './ParticipantVoting.css';
-import { useNavigate } from 'react-router-dom';
 
 type ParticipantVotingProps = { 
   event: {
@@ -16,7 +15,6 @@ type ParticipantVotingProps = {
 const ParticipantVoting = ({ event }: ParticipantVotingProps) => {  
   const [selectedTimes, setSelectedTimes] = useState<Date[]>([]);
   const [submitting, setSubmitting] = useState(false);
-  const navigate = useNavigate();
 
   const handleTimeSelection = (time: Date) => {
     if (selectedTimes.includes(time)) {
@@ -50,7 +48,7 @@ const ParticipantVoting = ({ event }: ParticipantVotingProps) => {
         throw new Error('Failed to create vote');
       }
       setSelectedTimes([]);
-      window.location.href = window.location.href;    
+      window.location.href = window.location.href + '';    
     } catch (error) {
       console.error('Error creating vote:', error);
     } finally {
