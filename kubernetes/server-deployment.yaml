@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doodle-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: doodle-server
+  template:
+    metadata:
+      labels:
+        app: doodle-server
+    spec:
+      containers:
+      - name: doodle-server
+        image: ayanchev/doodle-server:latest
+        ports:
+        - containerPort: 3001
+        command: ["sh", "/home/doodle/server/run-migrations.sh"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: doodle-config
+              key: database-url
+        - name: ACCESS_TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: doodle-secret
+              key: access-token-secret
+        - name: SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: doodle-config
+              key: server-port
+        - name: BCRYPT_SALT_ROUNDS
+          valueFrom:
+            configMapKeyRef:
+              name: doodle-config
+              key: bcrypt-salt-rounds
+        - name: JWT_EXPIRATION_TIME
+          valueFrom:
+            configMapKeyRef:
+              name: doodle-config
+              key: jwt-expiration-time
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: doodle-config
+data:
+  db-port: "5432"
+  postgres-user: "postgres"
+  postgres-db: "doodledb"
+  server-port: "3001"
+  server-url: "http://localhost"
+  bcrypt-salt-rounds: "10"
+  jwt-expiration-time: "24h"
+  client-port: "3000"
+  database-url: "postgresql://postgres:postgres@db:5432/doodledb"
