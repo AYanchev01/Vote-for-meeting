@@ -14,12 +14,9 @@ spec:
     spec:
       containers:
       - name: doodle-client
-        image: ayanchev/doodle-client:latest
+        image: ${CLIENT_IMAGE} 
         ports:
         - containerPort: 3000
-        env:
-        - name: REACT_APP_SERVER_URL
-          value: "http://doodle-server:3001"
         resources:
           requests:
             memory: "128Mi"

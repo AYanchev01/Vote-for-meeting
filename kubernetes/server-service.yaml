@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: doodle-server
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: doodle-server
   ports:
-  - port: 3001
+  - port: 80
     targetPort: 3001

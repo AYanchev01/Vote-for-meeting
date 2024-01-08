@@ -14,10 +14,9 @@ spec:
     spec:
       containers:
       - name: doodle-server
-        image: ayanchev/doodle-server:latest
+        image: ${SERVER_IMAGE}
         ports:
         - containerPort: 3001
-        command: ["sh", "/home/doodle/server/run-migrations.sh"]
         env:
         - name: DATABASE_URL
           valueFrom:

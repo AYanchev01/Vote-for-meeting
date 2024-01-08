@@ -11,4 +11,4 @@ data:
   bcrypt-salt-rounds: "10"
   jwt-expiration-time: "24h"
   client-port: "3000"
-  database-url: "postgresql://postgres:postgres@db:5432/doodledb"
+  database-url: "postgresql://postgres:postgres@localhost:5432/doodledb"

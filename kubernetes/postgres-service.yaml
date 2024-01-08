@@ -1,9 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: db
+  name: postgres
+  labels:
+    service: postgres
 spec:
   ports:
   - port: 5432
+    targetPort: 5432
   selector:
-    app: doodle-db
+    service: postgres
+  type: ClusterIP
