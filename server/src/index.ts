@@ -5,6 +5,7 @@ import loginRoutes from './routes/login';
 import registerRoutes from './routes/register';
 import voteRoutes from './routes/votes';
 import docsRoute from './routes/docs';
+import healthRoute from './routes/health';
 
 const app = express();
 const SERVER_PORT = process.env.SERVER_PORT || 3001;
@@ -19,6 +20,7 @@ app.use(loginRoutes);
 app.use(registerRoutes);
 app.use(voteRoutes);
 app.use(docsRoute);
+app.use(healthRoute);
 
 // Start the server
 app.listen(SERVER_PORT, () => {
