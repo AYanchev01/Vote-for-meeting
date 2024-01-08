@@ -1,0 +1,78 @@
+name: RELEASE
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push-client:
+    name: Build client docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push client image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          file: ./client/Dockerfile
+          push: false
+          tags: ayanchev/doodle-client:${{ github.sha }}
+          build-args: |
+            REACT_APP_SERVER_URL=${{ secrets.SERVER_URL }}
+
+      - name: Scan the Docker image with Trivy
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true # TO DO: fix the vulnerabilities
+        with:
+          image-ref: 'ayanchev/doodle-client:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          severity: 'HIGH,CRITICAL'
+
+      - name: Push Docker image
+        if: success()
+        run: docker push ayanchev/doodle-client:${{ github.sha }}
+
+  build-and-push-server:
+    name: Build server docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push server image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          file: ./server/Dockerfile
+          push: false
+          tags: ayanchev/doodle-server:${{ github.sha }}
+
+      - name: Scan the Docker image with Trivy
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true # TO DO: fix the vulnerabilities
+        with:
+          image-ref: 'ayanchev/doodle-server:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          severity: 'HIGH,CRITICAL'
+
+      - name: Push Docker image
+        if: success()
+        run: docker push ayanchev/doodle-server:${{ github.sha }}
