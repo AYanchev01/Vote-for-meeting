@@ -1,39 +1,5 @@
 version: '3.8'
 services:
-  server:
-    env_file:
-      - .env
-    container_name: doodle_server
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
-    depends_on:
-      - db
-    restart: on-failure
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${DB_PORT}/${POSTGRES_DB}
-      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
-      SERVER_PORT: ${SERVER_PORT}
-      SERVER_URL: ${SERVER_URL}
-      BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
-      JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
-    entrypoint: ["sh", "/home/doodle/server/run-migrations.sh"]
-
-  client:
-    env_file:
-      - .env
-    container_name: doodle_client
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-      args:
-        REACT_APP_SERVER_URL: ${SERVER_URL}:${SERVER_PORT}
-    ports:
-      - ${CLIENT_PORT}:${CLIENT_PORT}
-    restart: on-failure
-
   db:
     env_file:
       - .env
@@ -48,5 +14,54 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    build:
+      context: ./server
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${DB_PORT}/${POSTGRES_DB}
+    command: npx prisma migrate deploy
+    depends_on:
+      db:
+        condition: service_healthy
+
+  server:
+    env_file:
+      - .env
+    container_name: doodle_server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    depends_on:
+      migrate:
+        condition: service_started
+    restart: on-failure
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${DB_PORT}/${POSTGRES_DB}
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
+      SERVER_PORT: ${SERVER_PORT}
+      SERVER_URL: ${SERVER_URL}
+      BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS}
+      JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
+
+  client:
+    env_file:
+      - .env
+    container_name: doodle_client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_SERVER_URL: ${SERVER_URL}:${SERVER_PORT}
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    restart: on-failure
 volumes:
   pg_data: {}

@@ -40,9 +40,7 @@ WORKDIR /home/doodle/server
 # Copy build artifacts from the build stage
 COPY --from=builder /home/doodle/server .
 
-# Copy the run-migrations.sh script and make it executable
-COPY --chown=doodle ./run-migrations.sh ./run-migrations.sh
-RUN chmod +x ./run-migrations.sh
-
 # Expose the port the app runs on
 EXPOSE ${SERVER_PORT}
+
+CMD ["npm", "start"]
