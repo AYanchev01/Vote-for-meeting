@@ -5,9 +5,11 @@ import loginRoutes from './routes/login';
 import registerRoutes from './routes/register';
 import voteRoutes from './routes/votes';
 import docsRoute from './routes/docs';
+import healthRoute from './routes/health';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const SERVER_PORT = process.env.SERVER_PORT || 3001;
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost';
 
 app.use(express.json());
 app.use(cors());
@@ -18,8 +20,9 @@ app.use(loginRoutes);
 app.use(registerRoutes);
 app.use(voteRoutes);
 app.use(docsRoute);
+app.use(healthRoute);
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(SERVER_PORT, () => {
+  console.log(`Server running on ${SERVER_URL}:${SERVER_PORT}`);
 });

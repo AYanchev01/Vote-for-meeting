@@ -28,11 +28,12 @@ export const Register: React.FC = () => {
       alert('Password must contain 6 to 16 characters, at least one digit and at least one symbol!');
     } else if (pass !== confirmPass) {
       alert("Passwords don't match!");
+      //eslint-disable-next-line
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       alert('Invalid email!');
     } else {
       try{
-        const response = await fetch('http://localhost:3001/register', {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
 
-const SALT_ROUNDS = Number(process.env.SALT_ROUNDS) || 10;
+const BCRYPT_SALT_ROUNDS = Number(process.env.BCRYPT_SALT_ROUNDS) || 10;
 const prisma = new PrismaClient({log:['query']});
 
 
@@ -20,7 +20,7 @@ class AuthService{
     async register(firstName:string, lastName:string, email:string, password:string){
         
         const name = `${firstName} ${lastName}`;
-        const pass = await bcrypt.hash(password, SALT_ROUNDS);
+        const pass = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
         const user = await prisma.user.create({
             data:{
                 name: name,
